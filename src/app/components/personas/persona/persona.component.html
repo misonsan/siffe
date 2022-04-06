@@ -1,0 +1,46 @@
+<td>{{i}}</td>
+<td>{{persona.cognome}}</td>
+<td>{{persona.nome}}</td>
+<td [style.color]="getColor(persona.idRuolo_Day)" [style.background-color]="getBbackgroundColor(persona.idRuolo_Day)"><strong>{{persona.d_ruolo_day}}</strong></td>
+
+
+
+
+<td class="buttons">
+  <div class="row">
+    <div class="col-sm-4">
+              <button   class="btn btn-primary  btn-sm" (click)="showPersonaDetail()">
+                <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+
+     <!-- <button   class="btn btn-primary  btn-sm" (click)="showMessaDetail()"> -->
+       <!--  <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>  -->
+          <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+      </button>
+    </div>
+  </div>
+</td>
+
+<!--
+  <div class="modal fade" id="noManifModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <div class="iconinfo">
+              <fa-icon [icon]="faInfoCircle"  fixed="true" class="icon-information"></fa-icon>
+            </div>
+              <h3 class="modal-title">{{ headerPopup }}</h3>
+              <button type="button" class="close" data-dismiss="modal">
+                  <span>&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ textMessage1 }} &nbsp;&nbsp; <strong class="nameFedele"> {{ textMessage2 }} </strong>  </p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary  btn-lg active" data-dismiss="modal" (click)="okconfirm()">Ok</button>
+          </div>
+      </div>
+  </div>
+</div>   -->
+
+

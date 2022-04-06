@@ -1,0 +1,174 @@
+<p>persone works!</p>
+
+<div class="container-fluid">
+  <caption class="title col-sm-12">{{title}}</caption>
+  <br>
+  <div class="row justify-content-md-center">    <!--  <div class="row justify-content-md-center">  -->
+    <form #fm ="ngForm">
+
+      <div class="form-row">
+        <div class="row col-sm-6">
+          <div class="col-sm-6">
+               <button  class="btn btn-primary btn-rounded"  (click)="Nuovo()">Registrazione
+                 <fa-icon [icon]="faPlusSquare"  fixed="true"></fa-icon>
+                </button>
+           </div>
+        </div>
+      </div>
+      <br>
+
+
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="form-group row">
+          <div class="col-sm-6" >
+            <div class="form-check form-check-inline" *ngFor="let option of options; let idx = index">
+              <input type="radio" name="radiogroup" [value]="option" (change)="onSelectionChange(option)">&nbsp; {{option}}
+            </div>
+          </div>
+
+          <div class="col-md-3 "  *ngIf="enabledSelect === true" >
+            <div class="dropdown">
+              <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedRuolo" ngModel name="ruolo" id="ruolo" class="form-select" required (change)="onSelectedRuolo($event.target.value)" aria-label="Default select example">
+                <option selected value="999"  >Seleziona il ruolo</option>
+                <option *ngFor="let ruolo of ruoli" [value]="ruolo.id"  class="form-control"  >{{ruolo.d_ruolo_day}}</option>
+              </select>
+            </div>
+          </div>
+          &nbsp;
+          <div class="col-md-3"  *ngIf="enabledSelect === true" >
+            <div class="dropdown">
+              <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedStato" ngModel name="stato" id="stato" class="form-select" required (change)="onSelectedStato($event.target.value)" aria-label="Default select example">
+                <option selected value="999"  >Seleziona lo Stato</option>
+                <option *ngFor="let stato of stati" [value]="stato.id"  class="form-control"  >{{stato.d_stato_persona}}</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+
+        <div class="form-group row" >
+          <div class="col-sm-1">
+            <div class="alignicon">
+              <fa-icon [icon]="faSearch"  fixed="true"></fa-icon>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="search-hero">
+              <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="inserisci campo di ricerca">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div *ngIf="trovatoRec" >
+              <strong>Record :</strong>&nbsp;&nbsp; {{nRec}}
+            </div>
+          </div>
+
+    </div>
+    </div>
+    <br>
+
+
+      <!--   old   -->
+      <!--
+            <table class="table">
+              <div class="row">
+              <tr>
+                <td class="col col-md-3">
+                    <div class="form-check form-check-inline" *ngFor="let option of options; let idx = index">
+                      <input type="radio" name="radiogroup" [checked]="idx === 0" [value]="option" (change)="onSelectionChange(option)">&nbsp; {{option}}
+                    </div>
+                </td>
+                <td>
+                 <td>
+                  <div class="col-md-4"  *ngIf="enabledSelect === true" >
+                    <div class="dropdown">
+                      <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedTipologia" ngModel name="tipologia" id="tipologia" class="form-select" required (change)="onSelectedTipologia($event.target.value)" aria-label="Default select example">
+                        <option selected value="999"  >Seleziona la Tipologia</option>
+                        <option *ngFor="let tipologia of tipologie" [value]="tipologia.id"  class="form-control"  >{{tipologia.d_tipologia}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  &nbsp;&nbsp;
+                  <div class="col-md-4"  *ngIf="enabledSelect === true" >
+                    <div class="dropdown">
+                      <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedCategoria" ngModel name="categoria" id="Categoria" class="form-select" required (change)="onSelectedCategoria($event.target.value)" aria-label="Default select example">
+                        <option selected value="999"  >Seleziona la Categoria</option>
+                        <option *ngFor="let categoria of categorie" [value]="categoria.id"  class="form-control"  >{{categoria.d_categoria}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  &nbsp;
+                  <div *ngIf="trovatoRec"  class="col col-md-2 ">
+                     <strong>Record :</strong>&nbsp;&nbsp; {{nRec}}
+                  </div>
+-->
+
+
+
+          <!--
+                  <div class="col-md-5">
+                    <button [disabled]="!validSearch" class="btn btn-success btn-lg" (click)="ricercaPersone()">Ricerca
+                      <fa-icon [icon]="faSearch"  fixed="true"></fa-icon>
+                    </button>
+                  </div>  -->
+        <!--
+                </td>
+                </tr>
+              </div>
+
+            </table>   -->
+
+
+     <form #fm ="ngForm">
+
+     <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+       <tr >
+           <th>prog</th>
+           <th>Cognome</th>
+           <th>Nome</th>
+           <th>email</th>
+           <th>Ruolo</th>
+           <th>in Serv.</th>
+           <th>Action</th>
+           <th></th>
+        </tr>
+
+       <tr app-persona2  *ngFor ="let persona of persone | filter:searchText | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+       [persona2-prog] = i+1
+       [persona2-data] = "persona"
+       [functionUser] = functionUser
+       (onSelectPersona) ="onSelectPersona($event)"
+       (onDeletePersona) ="onDeletePersona($event)"
+       >
+
+
+     </tr>
+     </table>
+
+     <div class="row col-md-12">
+      <!-- messaggi -->
+      <div *ngIf="!alertSuccess && isVisible" class="alert alert-danger" role="alert">
+        <!--   <h4 class="alert-heading">Errore in elenco</h4>    -->
+           <p>{{Message}}</p>
+           <hr>
+         </div>
+         <div *ngIf="alertSuccess && isVisible" class="alert alert-success" role="alert">
+         <!--   <h4 class="alert-heading">Modifca Password</h4>    -->
+           <p>{{Message}}</p>
+         </div>
+        </div>
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+     </form>
+
+

@@ -1,0 +1,5 @@
+<td>{{commandariga.descrizione_prodotto}}</td>
+<td>{{commandariga.qta_ord}}</td>
+<td>{{commandariga.prezzo}}</td>
+<!-- <td>{{commandariga.qta_ord * commandariga.prezzo}}</td> -->
+<td [style.color]="getColor(commandariga.stato)"><strong>{{commandariga.d_stato_riga_commanda}}</strong></td>

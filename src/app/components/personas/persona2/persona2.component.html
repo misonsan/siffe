@@ -1,0 +1,54 @@
+
+<td>{{i}}</td>
+<td>{{persona.cognome}}</td>
+<td>{{persona.nome}}</td>
+<td>{{persona.email}}</td>
+<td [style.color]="getColor(persona.idRuolo_Day)" [style.background-color]="getBbackgroundColor(persona.idRuolo_Day)"><strong>{{persona.d_ruolo_day}}</strong></td>
+
+<td >{{persona.inServizio}}</td>
+<td class="buttons">
+  <div class="row">
+    <div class="col-sm-4">  <!--  *ngIf="functionUser === navigateEdits"-->
+      <button class="btn btn-sm  btn-danger" (click)="open(content, persona)">
+        <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+      </button>
+    </div>
+
+    <div class="col-sm-4">
+              <button   class="btn btn-primary  btn-sm" (click)="selectedPersona()">
+                <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+
+     <!-- <button   class="btn btn-primary  btn-sm" (click)="showMessaDetail()"> -->
+       <!--  <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>  -->
+          <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+      </button>
+    </div>
+  </div>
+</td>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header modal-header-color">
+  <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-body">
+  <form>
+  <p>confermi la cancellazione di {{persona.cognome}}&nbsp;&nbsp;{{persona.nome}}&nbsp; ?</p>
+
+
+  </form>
+  </div>
+  <div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel
+    <fa-icon [icon]="faWindowClose" fixed="true"></fa-icon>
+  </button>
+
+  <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+    <fa-icon [icon]="faTrash" fixed="true"></fa-icon>
+  </button>
+  </div>
+</ng-template>
+

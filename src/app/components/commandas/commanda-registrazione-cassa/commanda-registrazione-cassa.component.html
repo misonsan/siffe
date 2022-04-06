@@ -1,0 +1,399 @@
+<p>commanda-registrazione-cassa works!</p>
+
+
+<div class="container">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-sm-12">{{title}}</caption>
+  </div>
+  <div class="header_Edit title_Edit col-md-12" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+    <input disabled class="form-control" type="text" name="title" [(ngModel)]="title" autocomplete="off" >
+  </div>
+
+
+<div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="commandaw.id" class="form-control" name="id" id="id">
+        <div class="row">
+          <label for="anagrafica_cliente" class="col-sm-1 col-form-label">Cliente</label>
+          <div class="col-sm-4">
+            <input disabled type="text" #anagrafica_cliente="ngModel"  [(ngModel)]="commandaw.anagrafica_cliente" class="form-control" name="anagrafica_cliente" id="anagrafica_cliente">
+          </div>
+          <label for="numPersone" class="col-sm-1 col-form-label">Persone</label>
+          <div class="col-md-1">
+            <input disabled type="text" #numPersone="ngModel"  [(ngModel)]="commandaw.numPersone" class="form-control" name="numPersone" id="numPersone">
+          </div>
+          <label for="numTavolo" class="col-sm-1 col-form-label">Tavolo</label>
+          <div class="col-sm-1">
+              <input disabled type="text" #numTavolo="ngModel"  [(ngModel)]="commandaw.numTavolo" class="form-control" name="numTavolo" id="numTavolo">
+          </div>
+
+          <div class="col-sm-3">
+            <input disabled #d_stato_commanda="ngModel"  [(ngModel)]="commandaw.d_stato_commanda" class="form-control" name="d_stato_commanda" id="d_stato_commanda" [style.color]="commandaw.stato == 1 ? 'red' : null">
+          </div>
+        </div>
+
+   <hr>
+   <!-- totali -->
+   <div class="row">
+
+     <strong><label  class="col-sm-12 offset-6 col-form-label">Totali</label></strong>
+        <label for="importodaPagare" class="col-sm-1 col-form-label totali">Da Pagare</label>
+        <div class=" col-md-1">
+          <input disabled type="text" #importodaPagare="ngModel"  [(ngModel)]="commandaw.importodaPagare" class="form-control" name="importodaPagare" id="importodaPagare">
+        </div>
+        <label for="importoPagato" class="col-md-1 col-form-label totali">Incassato</label>
+         <div class=" col-md-1">
+          <input disabled type="text" #importoProdotti="ngModel"  [(ngModel)]="commandaw.importoPagato" class="form-control" name="importoPagato" id="importoPagato">
+         </div>
+         <label for="resto" class="col-sm-1 col-form-label totali">resto</label>
+         <div class=" col-md-1">
+          <input disabled type="text" #importodaPagare="ngModel"  [(ngModel)]="commandaw.resto" class="form-control" name="resto" id="resto">
+         </div>
+
+         <label for="sbilancio" class="col-sm-1 col-form-label totali">sbilancio</label>
+         <div class=" col-md-1">
+          <input disabled type="text" #importoCoperto="ngModel"  [(ngModel)]="commandaw.importoPagato - commandaw.importodaPagare - this.totReso" class="form-control" name="sbilancio" id="sbilancio">
+         </div>
+
+            <label *ngIf="commandaw.idSanfra !== 0" for="buonoPasto" class="col-sm-2 col-form-label totali">Buono Pasto</label>
+            <div class=" col-md-1" *ngIf="commandaw.idSanfra !== 0">
+            <input disabled type="text" #buonoPasto="ngModel"  [(ngModel)]="commandaw.buonoPasto" class="form-control" name="buonoPasto" id="buonoPasto">
+            </div>
+
+
+
+   </div>
+   <hr>
+   <div class="row">
+     <div class="col-md-6">
+       incasso
+
+       <div >  <!-- *ngIf="visibleProdotti === true"-->
+        <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+          <tr>
+          <!--  <th>prog</th>  -->
+            <th>Taglia</th>
+            <th>Quantita</th>
+            <th>Valore</th>
+            <th>Action</th>
+          </tr>
+          <tr app-cassawc  *ngFor ="let tt of tagliei | paginate: { itemsPerPage: 10, currentPage: p_inc }; let i = index"
+          [cassawc-prog] = i+1
+          [cassawc-data] = "tt"
+          (totaleIncassato) ="totaleIncassato($event)"
+          >
+
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td class="col-md-3 totale">
+              <input disabled #importoPagato="ngModel"  [(ngModel)]="commandaw.importoPagato" class="form-control" name="importoPagato" id="importoPagato" >
+            </td>
+          </tr>
+        </table>
+       </div>
+
+
+       <div class="row">
+
+         <div class="col-md-6">
+         </div>
+         <div disabled class="col-sm-3" *ngIf="visibleresetIncasso === true">
+            <button class="btn btn-warning  btn-md"  (click)="resetincasso()">Reset
+                <fa-icon [icon]="faRecycle"></fa-icon>
+            </button>
+          </div>
+          <div disabled class="col-sm-3" *ngIf="commandaw.importoPagato !>  commandaw.importodaPagare">
+            <button class="btn btn-primary  btn-md"  (click)="incassa()">Incassa
+                <fa-icon [icon]="faUserEdit"></fa-icon>
+            </button>
+          </div>
+       </div>
+      </div>
+
+
+     <div class="col-md-6">
+      resto
+      <div *ngIf="visibleResto === true">  <!-- -->
+        <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+          <tr>
+          <!--  <th>prog</th>  -->
+            <th>Taglia</th>
+            <th>Quantita</th>
+            <th>Valore</th>
+            <th>Cassa Attuale</th>
+            <th></th>
+          </tr>
+          <tr app-cassawc1  *ngFor ="let tt of taglier | paginate: { itemsPerPage: 10, currentPage: p_res }; let i = index"
+          [cassawc1-prog] = i+1
+          [cassawc1-data] = "tt"
+          [cassawc1-residuo] = "commandaw.importoPagato - commandaw.importodaPagare"
+          (totaleReso) ="totaleReso($event)"
+          >
+
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td class="col-md-3 totale" *ngIf="commandaw.importoPagato - commandaw.importodaPagare - this.totReso === 0">
+              <input disabled #resto="ngModel"  [(ngModel)]="commandaw.resto" class="form-control" name="resto" id="resto" >
+            </td>
+          </tr>
+        </table>
+       </div>
+       <div class="row">
+
+        <div class="col-md-6">
+        </div>
+        <div disabled class="col-sm-3" *ngIf="visibleresetResto === true">
+          <button class="btn btn-warning  btn-md"  (click)="resetresto()">Reset
+              <fa-icon [icon]="faRecycle"></fa-icon>
+          </button>
+        </div>
+       <div disabled class="col-sm-3" *ngIf="commandaw.importoPagato - commandaw.importodaPagare - this.totReso ===  0">
+         <button class="btn btn-primary  btn-md"  (click)="creaCommanda()">Stampa
+               <fa-icon [icon]="faUserEdit"></fa-icon>
+         </button>
+       </div>
+      </div>
+    </div>
+
+
+
+
+
+   </div>
+
+   </form>
+   </div>
+</div>
+</div>
+
+   <!--
+   <div class="row">
+    <label for="importoProdotti" class="col-sm-1 col-form-label">Prodotti</label>
+    <div class="col-sm-1">
+      <input disabled type="text" #importoProdotti="ngModel"  [(ngModel)]="commandaw.importoProdotti" class="form-control" name="importoProdotti" id="importoProdotti">
+    </div>
+    <label for="importoCoperto" class="col-sm-1 col-form-label">Coperto</label>
+    <div class="col-md-1">
+      <input disabled type="text" #importoCoperto="ngModel"  [(ngModel)]="commandaw.importoCoperto" class="form-control" name="importoCoperto" id="importoCoperto">
+    </div>
+    <label for="buonoPasto" class="col-sm-2 col-form-label">Buono Pasto</label>
+    <div class="col-sm-1">
+        <input disabled type="text" #numTavolo="ngModel"  [(ngModel)]="commandaw.buonoPasto" class="form-control" name="buonoPasto" id="buonoPasto">
+    </div>
+    <label for="totale" class="col-sm-1 col-form-label">Totale</label>
+    <div class="col-sm-1">
+      <input disabled #totale="ngModel"  [(ngModel)]="commandaw.importoProdotti + commandaw.importoCoperto - commandaw.buonoPasto" class="form-control" name="totale" id="totale" >
+    </div>
+   </div>
+   <br>
+
+   <div class="row col-md-12 offset-6">
+    dati incasso
+   </div>
+
+
+   <div *ngIf="visibleProdotti === true">
+
+
+    <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+      <tr>
+        <th>prog</th>
+        <th>Taglia</th>
+        <th>Quantita</th>
+        <th>Valore</th>
+        <th>Action</th>
+        <th></th>
+        <th></th>
+      </tr>
+
+
+
+      <tr app-cassaw  *ngFor ="let tt of taglie | filter:searchText | paginate: { itemsPerPage: 10, currentPage: p_prod }; let i = index"
+      [prodotto3-prog] = i+1
+      [prodotto3-data] = "tt"
+      (onCassaAggiornata) ="onCassaAggiornata($event)"
+      >
+
+      </tr>
+    </table>
+   </div>
+
+
+
+
+      </form>
+    </div>
+</div>
+
+</div>
+-->
+
+
+
+
+<!--
+
+<hr>
+
+
+<div class="container col-md-12 offset-3">
+    <div class="form-group form-footer">
+      <div class="row">
+        <div class="col-sm-3">
+          <button class="btn btn-primary  btn-md"  (click)="backToGiornata()">Back
+                <fa-icon [icon]="faHandPointLeft"></fa-icon>
+          </button>
+        </div>
+        <div class="col-sm-3">
+          <button [disabled]="fm.invalid" class="btn-md btn btn-info float-right"  (click)="registraIncasso()">Pagamento
+            <fa-icon [icon]="faHandPointLeft"></fa-icon>
+          </button>
+      </div>
+
+      </div>
+    </div>
+</div>
+
+
+
+
+
+          <br>
+
+
+          <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+
+            <p>{{Message}}</p>
+            <hr>
+            <p hidden class="mb-0" *ngIf="nRec === 0">{{Message1err}}</p>
+          </div>
+          <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+
+            <p>{{Message}}</p>
+            <hr>
+            <p class="mb-0"></p>
+          </div>
+
+
+          <div *ngIf="visibleProdotti === true">
+
+
+            <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+              <tr>
+                <th>prog</th>
+                <th>Prodotto</th>
+                <th>Tipologia</th>
+                <th>Categoria</th>
+                <th>Disp.</th>
+                <th>Prezzo</th>
+                <th>Qta</th>
+                <th>Residuo</th>
+                <th>Action</th>
+                <th></th>
+                <th></th>
+              </tr>
+
+
+
+              <tr app-prodotto3  *ngFor ="let prodotto of prodotti | filter:searchText | paginate: { itemsPerPage: 10, currentPage: p_prod }; let i = index"
+                [prodotto3-prog] = i+1
+                [prodotto3-data] = "prodotto"
+                (onSelectProdotto) ="onSelectProdotto($event)"
+                >
+
+
+              </tr>
+            </table>
+            <pagination-controls (pageChange)="p_pren = $event"></pagination-controls>
+
+          </div>
+
+     <div *ngIf="visibleProdottiAcquistati === true">
+
+
+            <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+              <tr>
+                <th>prog</th>
+                <th>Prodotto</th>
+                <th>Categoria</th>
+                <th>Prezzo</th>
+                <th>Qta</th>
+                <th>Importo</th>
+                <th>Action</th>
+                <th></th>
+                <th></th>
+              </tr>
+
+
+              <tr app-commandawriga  *ngFor ="let riga of commandawrighe | filter:searchText | paginate: { itemsPerPage: 5, currentPage: p_righe }; let i = index"
+                [commandawriga-prog] = i+1
+                [commandawriga-data] = "riga"
+                (onSelectOrdinato) ="onSelectOrdinato($event)"
+                >
+
+
+              </tr>
+            </table>
+            <pagination-controls (pageChange)="p_pren = $event"></pagination-controls>
+
+          </div>   -->
+
+<!--
+<div class="container" *ngIf="visibleProdotto === true">
+   <input hidden #id="ngModel"  [(ngModel)]="commandawriga.id" class="form-control" name="id" id="id">
+  <div class="row">
+    <label for="descrizione_prodotto" class="col-sm-1 col-form-label">Prodotto</label>
+    <div class="col-sm-4">
+      <input disabled #descrizione_prodotto="ngModel"  [(ngModel)]="commandawriga.descrizione_prodotto" class="form-control" name="descrizione_prodotto" id="descrizione_prodotto">
+    </div>
+    <label for="disponibile_Day" class="col-sm-1 col-form-label">Disponibile</label>
+    <div class="col-md-1">
+      <input  disabled [(ngModel)]="commandawriga.disponibile_Day"  #disponibile_Day="ngModel" class="form-control"  name="disponibile_Day" id="disponibile_Day">
+    </div>
+    <label for="prezzo_day" class="col-sm-1 col-form-label">Prezzo</label>
+    <div class="col-sm-1">
+        <input disabled type="text" #prezzo_day="ngModel"  [(ngModel)]="commandawriga.prezzo_day" class="form-control" name="prezzo_day" id="prezzo_day">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <label for="qta" class="col-sm-1 col-form-label">Quantita</label>
+    <div class="col-sm-1">
+      <input type="number" #qta="ngModel"  [(ngModel)]="commandawriga.qta" class="form-control" name="qta" id="qta" min="1" max="999">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+
+      <div class="col-sm-10 offset-2">
+        <button type="button" class="btn btn-info float-left" (click)="resetProdotto()">Annulla</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary float-left" [disabled]="prodotto.qta === 0" (click)="conferma()">Conferma</button>
+      </div>
+
+
+  </div>
+
+</div>
+</div>
+-->
+
+
+
+
+

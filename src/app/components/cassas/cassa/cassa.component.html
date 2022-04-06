@@ -1,0 +1,13 @@
+<!--<td>{{i}}</td>  -->
+<td class="col-sm-2 tagli">{{taglia.d_taglia}}</td>
+<td class="col-sm-1" [style.color]="cassa.qtaIn > 0 ? 'blue' : null"><strong>{{cassa.qtaIn}}</strong></td>
+<td class="col-sm-1" [style.color]="cassa.qtaIn > 0 ? 'blue' : null"><strong>{{cassa.valoreIn}}</strong> </td>
+<td class="col-sm-1"><strong>{{cassa.qtaAc}}</strong></td>
+<td class="col-sm-1"><strong>{{cassa.valoreAc}}</strong></td>
+<td class="col-sm-1" [style.color]="cassa.qtaFi > 0 ? 'orange' : null"><strong>{{cassa.qtaFi}}</strong></td>
+<td class="col-sm-1" [style.color]="cassa.qtaFi > 0 ? 'orange' : null"><strong>{{cassa.valoreFi}}</strong></td>
+<td class="col-sm-1" [style.color]="cassa.qtaSb > 0 ? 'green' : 'red'"
+                     [style.bgcolor]="cassa.qtaSb >= 0 ? 'yellow' : 'black'"><strong>{{cassa.qtaSb}}</strong></td>
+<td class="col-sm-1" [style.color]="cassa.qtaSb > 0 ? 'green' : 'red'"
+                     [style.bgcolor]="cassa.qtaSb > 0 ? 'yellow' : 'black'"><strong>{{cassa.valoreSb}}</strong></td>
+

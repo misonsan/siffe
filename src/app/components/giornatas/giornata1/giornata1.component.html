@@ -1,0 +1,14 @@
+<td>{{i}}</td>
+<td>{{giornata.dtGiornata | date: 'dd-MM-yyyy'}}</td>  <!-- {{giornata.dtGiornata | date: 'dd-MM-yyyy'}} -->
+<td [style.color]="giornata.stato == 0 ? 'red' : 'green'">{{giornata.d_stato_giornata}}</td>
+<td>{{giornata.numUtenti}}</td>
+<td>{{giornata.numCommande}}</td>
+<td>{{giornata.cassaFinale - giornata.cassaInizio}} </td>
+
+
+
+
+
+
+
+

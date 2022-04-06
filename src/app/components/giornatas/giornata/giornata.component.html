@@ -1,0 +1,62 @@
+<td>{{i}}</td>
+<td>{{giornata.id}}</td>
+<td>{{giornata.dtGiornata | date: 'dd-MM-yyyy'}}</td>  <!-- {{giornata.dtGiornata | date: 'dd-MM-yyyy'}} -->
+<td [style.color]="giornata.stato == 0 ? 'red' : 'green'">{{giornata.d_stato_giornata}}</td>
+<td [style.color]="giornata.statoMagazzino == 0 ? 'red' : 'green'">{{giornata.d_stato_magazzino}}</td>
+<td [style.color]="giornata.statoCassa == 0 ? 'red' : 'green'">{{giornata.d_stato_cassa}}</td>
+<td [style.color]="giornata.statoUtenti == 0 ? 'red' : 'green'"
+    [style.bgcolor]="giornata.statoUtenti == 0 ? 'black' : 'yellow'" >{{giornata.d_stato_utenti}}</td>
+<td class="buttons">
+  <div class="row col-sm-12">
+    <div class="col-sm-2">
+      <button class="btn btn-dark  btn-sm" (click)="showGiornata(giornata)"  type="button">
+       <fa-icon [icon]="faCalendarAlt" fixed="true"></fa-icon>
+
+      </button>
+    </div>
+
+    <div class="col-sm-2">
+      <button class="btn btn-primary  btn-sm" (click)="showGiornataDetail(giornata)"  type="button">
+        <fa-icon [icon]="faInfo" fixed="true"></fa-icon>
+
+
+      </button>
+    </div>
+    <!--      versione originaria con i dati cassa su Giornata
+    <div class="col-sm-2">
+      <button class="btn btn-success  btn-sm" (click)="showGiornataDetailCassa(giornata)"  type="button">
+       <fa-icon [icon]="faEuroSign" fixed="true"></fa-icon>
+
+      </button>
+    </div> -->
+    <div class="col-sm-2">
+      <button class="btn btn-success  btn-sm" (click)="showGiornataDetailCassa1(giornata)"  type="button">
+       <fa-icon [icon]="faEuroSign" fixed="true"></fa-icon>
+
+      </button>
+    </div>
+    <!-- completato gestione con popup e controllo stato -->
+    <div class="col-sm-2">
+      <button class="btn btn-info  btn-sm" (click)="showGiornataDetailProdotti(giornata)"  type="button">
+        <fa-icon [icon]="faUtensils" fixed="true" ></fa-icon>
+      </button>
+    </div>
+    <!-- completato gestione con popup e controllo stato -->
+    <div class="col-sm-2">
+      <button class="btn btn-warning  btn-sm" (click)="showGiornataDetailPersone(giornata)"  type="button">
+         <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+
+      </button>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-secondary  btn-sm" (click)="showGiornataDetailCommande(giornata)"  type="button">
+         <fa-icon [icon]="faList" fixed="true"></fa-icon>
+
+      </button>
+    </div>
+  </div>
+</td>
+
+
+
+

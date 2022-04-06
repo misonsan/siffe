@@ -1,0 +1,21 @@
+<td>{{i}}</td>
+<td>{{prodotto.descrizione}}</td>
+<td>{{prodotto.d_tipologia}}</td>
+<td>{{prodotto.d_categoria}}</td>
+<td>{{prodotto.disponibile_Day}}</td>
+<td>{{prodotto.prezzo_day}}</td>
+<td >{{prodotto.qta_vendute}}</td>
+<td >{{prodotto.residuo}}</td>
+<td class="buttons">
+  <div class="row">
+    <div class="col-sm-4">
+      <!-- (click)="showDetail()" modalità con soluzione 1 quando passavo al componente di dettaglio -->
+        <button   class="btn btn-primary  btn-sm" (click)="selezionaProdotto()"  >
+              <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+          <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+         </button>
+    </div>
+  </div>
+</td>
+
+

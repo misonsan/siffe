@@ -1,0 +1,207 @@
+<p>giornata-detail-cassa1 works!</p>
+<div class="container borde">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-sm-12">{{title}}</caption>
+  </div>
+  <div class="header_Edit title_Edit" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+
+      <strong>{{title}}</strong>
+
+  </div>
+  <!--
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    functionEdit: {{functionEdit}}&nbsp;&nbsp;functionEdits: {{functionEdits}}
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>  -->
+
+
+  <br>
+
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="giornata.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="giornata.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+        <!-- parte testata  disabled -->
+
+        <div class="row">
+            <label for="descManif" class="col-sm-2 col-form-label">Manifestazione</label>
+            <div class=" col-md-6">
+              <input disabled #descManif="ngModel"  [(ngModel)]="manif.descManif" class="form-control" name="descManif" id="descManif">
+            </div>
+
+            <div class=" col-md-2">
+        <!--    <label for="descManif" class="col-sm-3 col-form-label">Stato</label><div class="col-sm-8">   -->
+              <div>
+                <input disabled #d_stato_manifestazione="ngModel"  [(ngModel)]="manif.d_stato_manifestazione" class="form-control" name="d_stato_manifestazione" id="d_stato_manifestazione" [style.color]="manif.stato == 2 ? 'red' : null">
+              </div>
+            </div>
+        </div>
+
+        <br>
+      <!--  riga date inizio e finei  -->
+        <div class="row">
+          <label for="dtInizio" class="col-sm-2 col-form-label">Data Inizio</label>
+          <div class=" col-md-2">
+            <input  disabled [(ngModel)]="manif.dtInizio" [ngModel]="manif.dtInizio | date:'dd/MM/yyyy'" #dtInizio="ngModel" class="form-control"  name="dtInizio" id="dtInizio" >
+          </div>
+          <label for="dtFine" class="col-sm-2 col-form-label">Data Fine</label>
+          <div class=" col-md-2">
+            <input disabled [(ngModel)]="manif.dtFine"  [ngModel]="manif.dtFine | date:'dd/MM/yyyy'" #dtFine="ngModel" class="form-control"  name="dtFine" id="dtFine"  >
+          </div>
+        </div>
+        <hr>
+
+
+        <div class="row">
+          <label for="dtGiornata" class="col-sm-2 col-form-label">Giornata</label>
+          <div class=" col-md-2">
+            <input readonly [(ngModel)]="giornata.dtGiornata"  [ngModel]="giornata.dtGiornata | date:'dd/MM/yyyy'" #dtGiornata="ngModel" class="form-control"  name="dtGiornata" id="dtGiornata"  >
+          </div>
+
+          <div class="col-md-2">
+            <div>
+              <input disabled #d_stato_giornata="ngModel"  [(ngModel)]="giornata.d_stato_giornata" class="form-control" name="d_stato_giornata" id="d_stato_giornata" [style.color]="giornata.stato == 2 ? 'red' : null">
+            </div>
+          </div>
+
+            <label for="d_stato_cassa" class="col-sm-2 col-form-label">Stato Cassa</label>
+            <div class=" col-md-2">
+              <input disabled #d_stato_cassa="ngModel"  [(ngModel)]="giornata.d_stato_cassa" class="form-control" name="d_stato_cassa" id="d_stato_cassa" [style.color]="giornata.statoCassa == 0 ? 'red' : null">
+            </div>
+
+        </div>
+        <hr>
+
+    <!--     da personalizzare   -->
+
+
+
+     <!-- bottone per registrazione -->
+     <div class="row col-sm-12">
+          <div class="col-sm-3" *ngIf="giornata.statoCassa === 0">
+              <button  class="btn btn-primary btn-rounded"  (click)="registra()">Registrazione
+                  <fa-icon [icon]="faPlusSquare"  fixed="true"></fa-icon>
+              </button>
+          </div>
+          <div class="col-sm-3" *ngIf="giornata.statoCassa === 1">
+              <button  class="btn btn-outline-primary btn-rounded"  (click)="registra()">Registrazione
+                  <fa-icon [icon]="faPlusSquare"  fixed="true"></fa-icon>
+              </button>
+          </div>
+          <div class="col-sm-3" *ngIf="giornata.statoCassa > 1">
+              <button  class="btn btn-success btn-rounded"  (click)="registra()">Chiusura Giornata
+                <fa-icon [icon]="faPlusSquare"  fixed="true"></fa-icon>
+              </button>
+          </div>
+          <!-- il checkbox non è visibile !!!   booh !!!!! -->
+          <!--
+          <div disabled class="form-check col-sm-3 centro" *ngIf="giornata.statoCassa ===  0">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Modifica Cassa
+            </label>
+          </div> -->
+
+    </div>
+
+
+
+    <br>
+<!-- dettaglio della cassa -->
+
+<div class="row">
+
+   <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white">
+      <tr>
+        <th class="pezzature"> Pezzatura</th>
+        <th  colspan="2" class="alignheader centro cassaIniziale">Cassa Iniziale</th>
+        <th colspan="2" class="alignheader centro"> Cassa Attuale</th>
+        <th  colspan="2" class="alignheader centro cassaFinale"> Cassa Finale</th>  <!-- hidden *ngIf="(giornata.statoCassa == 0)"-->
+        <th colspan="2" class="alignheader centro sbilancio"> Sbilancio</th>
+
+     </tr>
+     <tr>
+          <th> </th>
+          <th class="centro  cassaIniziale"> Qta</th><th class="centro  cassaIniziale">valore</th>
+          <th class="centro"> Qta</th><th class="centro">valore</th>
+          <th class="centro cassaFinale"> Qta</th><th class="centro cassaFinale">valore</th>
+          <th class="centro sbilancio"> Qta</th><th class="centro sbilancio">valore</th>
+     </tr>
+     <tr app-cassa  *ngFor ="let cassa of casse  | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+     [cassa-prog] = i+1
+     [cassa-data] = "cassa">
+
+   </tr>
+
+
+<br>
+<tr>
+<td> <label> Totale</label></td>
+<td> </td>
+<td><input  disabled [(ngModel)]="tinizio"  #i005="ngModel" class="form-control num destra"  name="tinizio" id="tinizio"></td>
+<td>  </td>
+<td><input  disabled [(ngModel)]="tattuale"  #i005="ngModel" class="form-control num destra"  name="tattuale" id="tattuale"></td>
+<td></td>
+<td><input  disabled [(ngModel)]="tfinale"  #i005="ngModel" class="form-control num destra"  name="tfinale" id="tfinale"></td>
+<td class="utile pezzature">Utile </td>
+<td > <input  disabled [(ngModel)]="tsbilancio"  #i005="ngModel" class="form-control num destra totaleday"  name="tsbilancio" id="tsbilancio"></td>
+</tr>
+
+
+
+   </table>
+
+<!-- Bottoni funzionali -->
+<div class="container col-md-12 offset-3">
+    <div class="form-group form-footer">
+      <div class="row">
+        <div class="col-sm-3">
+          <button class="btn btn-primary  btn-md"  (click)="backToGiornata()">Back        <!--backToUsers()-->
+                <fa-icon [icon]="faHandPointLeft"></fa-icon>
+          </button>
+        </div>
+        <div class="col-sm-3" [(ngModel)]="giornata.statoCassa" #statoCassa="ngModel" [hidden]="giornata.statoCassa == 1">
+            <button class="btn btn-secondary  btn-md"  (click)="resetForm(fm.form)">Reset
+                  <fa-icon [icon]="faUndo"></fa-icon>
+            </button>
+        </div>
+        <div class="col-sm-3" [(ngModel)]="giornata.statoCassa" #statoCassa="ngModel" [hidden]="giornata.statoCassa == 1">
+            <button [disabled]="fm.invalid"  class="btn btn-success btn-md" (click)="showPopupConfirm()" data-toggle="modal" data-target="#cassaShowModal"> Salva    <!--   save()   salva -->
+                  <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+              </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+</div>
+
+    <!--  fine personaizzazione  -->
+
+          <br>
+      <!--   messaggio con esito operazione -->
+
+          <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+        <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p class="mb-0">{{Message1err}}</p>
+          </div>
+          <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+      <!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p class="mb-0"></p>
+          </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+

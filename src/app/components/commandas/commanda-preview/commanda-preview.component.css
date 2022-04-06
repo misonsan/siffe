@@ -1,0 +1,9 @@
+.borde {
+  border: 2px solid red;
+}
+.borde1 {
+  border: 2px solid violet;
+}
+td {
+  font-size: 12px;
+}

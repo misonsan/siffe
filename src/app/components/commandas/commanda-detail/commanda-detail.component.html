@@ -1,0 +1,111 @@
+<p>commanda-detail works!</p>
+
+<div class="container">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-sm-12">{{title}}</caption>
+  </div>
+  <div class="header_Edit title_Edit col-md-5" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+    <input disabled class="form-control" type="text" name="title" [(ngModel)]="title" autocomplete="off" >
+     <!-- <strong>{{title}}</strong>  -->
+
+  </div>
+  <!--
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    functionEdit: {{functionEdit}}&nbsp;&nbsp;functionEdits: {{functionEdits}}
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>  -->
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="commanda.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="commanda.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+        <br>
+        <div class="row">
+
+          <label for="anagrafica_cliente" class="col-sm-2 col-form-label">Cliente</label>
+          <div class=" col-md-4">
+            <input disabled #anagrafica_cliente="ngModel"  [(ngModel)]="commanda.anagrafica_cliente" class="form-control" name="anagrafica_cliente" id="anagrafica_cliente">
+          </div>
+          <label for="numPersone" class="col-sm-1 col-form-label">Persone</label>
+          <div class="col-md-1">
+            <input disabled #numPersone="ngModel"  [(ngModel)]="commanda.numPersone" class="form-control" name="numPersone" id="numPersone">
+          </div>
+          <label for="numTavolo" class="col-sm-1 col-form-label">Tavolo</label>
+          <div class="col-md-1">
+            <input disabled #numTavolo="ngModel"  [(ngModel)]="commanda.numTavolo" class="form-control" name="numTavolo" id="numTavolo">
+          </div>
+          <label for="importodaPagare" class="col-sm-1 col-form-label">Totale</label>
+          <div class="col-md-1">
+            <input disabled #importodaPagare="ngModel"  [(ngModel)]="commanda.importodaPagare" class="form-control" name="importodaPagare" id="importodaPagare">
+          </div>
+
+
+        </div>
+
+        <br>
+        <div class="container">
+          <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+            <tr>
+              <th>prog</th>
+              <th>tipo</th>
+              <th>Prodotto</th>
+              <th>Qtà</th>
+              <th>Prezzo</th>
+              <th>Valore</th>
+              <th></th>
+              <th></th>
+            </tr>
+
+
+            <tr app-commandariga  *ngFor ="let commandariga of commandarighe  | paginate: { itemsPerPage: 5, currentPage: p }; let i = index"
+              [commandariga-prog] = i+1
+              [commandariga-data] = "commandariga">
+
+            </tr>
+          </table>
+        </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+
+
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="header_Edit title_Edit col-md-6" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+              <input disabled class="form-control" type="text" name="titleIncasso" [(ngModel)]="titleIncasso" autocomplete="off" >
+               <!-- <strong>{{title}}</strong>  -->
+
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="header_Edit title_Edit col-md-5" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+              <input disabled class="form-control" type="text" name="titleResto" [(ngModel)]="titleResto" autocomplete="off" >
+               <!-- <strong>{{title}}</strong>  -->
+
+            </div>
+            <strong>resto</strong>
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+        </form>
+      </div>
+    </div>
+</div>

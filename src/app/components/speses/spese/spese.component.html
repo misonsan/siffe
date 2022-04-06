@@ -1,0 +1,183 @@
+<p>spese works!</p>
+<div class="container-fluid">
+  <div class="title col-sm-12">
+    <strong >{{title}}</strong>
+  </div>
+
+  <br>
+  <div class="row justify-content-md-center">    <!--  <div class="row justify-content-md-center">  -->
+    <form #fm ="ngForm">
+
+      <div class="form-row">
+        <div class="row col-sm-6">
+          <div class="col-sm-6">
+               <button  class="btn btn-primary btn-rounded"  (click)="Nuovo()">Registrazione
+                 <fa-icon [icon]="faPlusSquare"  fixed="true"></fa-icon>
+                </button>
+           </div>
+        </div>
+      </div>
+      <br>
+
+
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="form-group row">
+          <div class="col-sm-3" >
+            <div class="form-check form-check-inline" *ngFor="let option of options; let idx = index">
+              <input type="radio" name="radiogroup" [value]="option" (change)="onSelectionChange(option)">&nbsp; {{option}}
+            </div>
+          </div>
+
+          <div class="col-md-3 "  *ngIf="enabledSelect === true" >
+            <div class="dropdown">
+              <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedFornitore" ngModel name="fornitore" id="fornitore" class="form-select" required (change)="onSelectedFornitore($event.target.value)" aria-label="Default select example">
+                <option selected value="999"  >Seleziona il fornitore</option>
+                <option *ngFor="let fornitore of fornitori" [value]="fornitore.id"  class="form-control"  >{{fornitore.ragsociale}}</option>
+              </select>
+            </div>
+          </div>
+          &nbsp;
+          <div class="col-md-3"  *ngIf="enabledSelect === true" >
+            <div class="dropdown">
+              <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedStato" ngModel name="stato" id="stato" class="form-select" required (change)="onSelectedStato($event.target.value)" aria-label="Default select example">
+                <option selected value="999"  >Seleziona lo stato</option>
+                <option *ngFor="let stato of stati" [value]="stato.id"  class="form-control"  >{{stato.d_stato_spesa}}</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+
+        <div class="form-group row" >
+          <div class="col-sm-1">
+            <div class="alignicon">
+              <fa-icon [icon]="faSearch"  fixed="true"></fa-icon>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="search-hero">
+              <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="inserisci campo di ricerca">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div *ngIf="trovatoRec" >
+              <strong>Record :</strong>&nbsp;&nbsp; {{nRec}}
+            </div>
+          </div>
+
+    </div>
+    </div>
+    <br>
+
+
+     <form #fm ="ngForm">
+
+     <div *ngIf="enabledSelect === false">
+        <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+          <tr >
+              <th>prog</th>
+              <th>Fornitore</th>
+              <th>Documento</th>
+              <th>Motivo</th>
+              <th>Importo</th>
+              <th>Stato</th>
+                <!--  non serve action -->
+              <th>Action</th>
+              <th></th>
+            </tr>
+            <tr app-spesa1  *ngFor ="let spesa of spese | filter:searchText | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+                [spesa1-prog] = i+1
+                [spesa1-data] = "spesa"
+                [functionUser] = functionUser
+                (onSelectSpesa) ="onSelectSpesa($event)"
+                (onDeleteSpesa) ="onDeleteSpesa($event)"
+                >
+            </tr>
+          </table>
+     </div>
+     <div *ngIf="enabledSelect === true">
+
+      <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+        <tr >
+            <th>prog</th>
+            <th>Documento</th>
+            <th>Motivo</th>
+            <th>Importo</th>
+            <th>Stato</th>
+              <!--  non serve action -->
+            <th>Action</th>
+            <th></th>
+          </tr>
+          <tr app-spesa2  *ngFor ="let spesa1 of spese | filter:searchText | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+              [spesa2-prog] = i+1
+              [spesa2-data] = "spesa1"
+              [functionUser] = functionUser
+              (onSelectSpesa) ="onSelectSpesa($event)"
+              (onDeleteSpesa) ="onDeleteSpesa($event)"
+              >
+          </tr>
+        </table>
+     </div>
+
+     <!-- totali -->
+     <div class="row">
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label for="totspese" class="col-sm-4 col-form-label">Spese Totali</label>
+            <div class="col-sm-4">
+              <input readonly type="text" name="totspese" class="form-control" id="totspese" [(ngModel)]="totspese"  ngModel>  <!-- #totspese="ngModel" -->
+            </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label for="totspesedaPagare" class="col-sm-4 col-form-label">da Pagare</label>
+            <div class="col-sm-4">
+              <input readonly type="text" name="totspesedaPagare" class="form-control" id="totspesedaPagare" [(ngModel)]="totspesedaPagare" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label for="totspesePagate" class="col-sm-4 col-form-label">Pagate</label>
+            <div class="col-sm-4">
+              <input readonly type="text" name="totspesePagate" class="form-control" id="totspesePagate" [(ngModel)]="totspesePagate"  ngModel>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+     <br>
+     <div class="row col-md-12">
+      <!-- messaggi -->
+      <div *ngIf="!alertSuccess && isVisible" class="alert alert-danger" role="alert">
+        <!--   <h4 class="alert-heading">Errore in elenco</h4>    -->
+           <p>{{Message}}</p>
+           <hr>
+         </div>
+         <div *ngIf="alertSuccess && isVisible" class="alert alert-success" role="alert">
+         <!--   <h4 class="alert-heading">Modifca Password</h4>    -->
+           <p>{{Message}}</p>
+         </div>
+        </div>
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+     </form>
+
+

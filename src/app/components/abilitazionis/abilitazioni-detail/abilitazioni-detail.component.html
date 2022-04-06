@@ -1,0 +1,110 @@
+<p>abilitazioni-detail works!</p>
+
+
+<div class="container">
+
+  <!--
+  <div class="form-row">
+    <label>Livello</label>&nbsp;&nbsp;
+      <select formControlName="ruolo" class="form-select" aria-label="Default select example" #mySelect (change)='onOptionsSelected(mySelect.value)'     >
+
+        <option *ngFor="let userlvl of userlevels" [value]="userlvl.value"  class="form-control" >{{prod.dEnable}}</option>
+      </select>
+
+
+  </div>   -->
+
+  <div class="row">
+      <div  class="form-group col-md-4 was-validated">
+        <label for="livello"  class="col-sm-4 control-label ">Profilo</label>
+        <select [(ngModel)]="selectedPro" ngModel name="livello" id="livello" class="form-select" required (change)="selectedProfilo($event.target.value)" aria-label="Default select example">
+          <option selected value=""  >Seleziona il profilo</option>
+          <option *ngFor="let userlvl of userlevels" [value]="userlvl.id"  class="form-control"  >{{userlvl.UserLevelName}}</option>
+        </select>
+      </div>
+
+      <div *ngIf="trovatoRec"  class="col col-md-6">
+        <strong>Record :</strong>&nbsp;&nbsp; {{nRec}}
+      </div>
+   </div>
+
+
+  <br>
+  <hr>
+  <br>
+
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item"><a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Totali</a></li>
+    <li class="nav-item"><a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">attive</a></li>
+    <li class="nav-item"><a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">User</a></li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane p-4 fade" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+      merda
+
+      <div class="container-fluid">
+        <!--{{messa | json}}      -->
+          <form #fm ="ngForm">
+
+           <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+               <tr>
+                <th scope="col">prog</th>
+                <th scope="col">funzione</th>
+                <th scope="col">enabledNull</th>
+                <th scope="col">enabledInqu</th>
+                <th scope="col">enabledEdit</th>
+                <th scope="col">presentNote</th>
+                <!--  non serve action -->
+                <th scope="col" colspan="2" style="text-align: center " >Action</th>
+              </tr>
+  <!--
+             <tr app-persona *ngFor ="let user of users | paginate: { itemsPerPage: 10, currentPage: p_pers }; let i = index"
+             [persona-prog] = i+1
+             [persona-data] = "user" "    -->
+
+             <tr app-abilitazione *ngFor ="let abil of abilitazioni| paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+             [user-prog] = i+1
+             [user-data] = "abil" [style.color]="abil.enabledEdit == 'Y' ? 'red' : null">
+
+
+
+           </tr>
+           </table>
+
+           <div class="row col-md-12">
+            <!-- messaggi -->
+            <div *ngIf="!alertSuccess && isVisible" class="alert alert-danger" role="alert">
+              <!--   <h4 class="alert-heading">Errore in elenco</h4>    -->
+                 <p>{{Message}}</p>
+                 <hr>
+               </div>
+               <div *ngIf="alertSuccess && isVisible" class="alert alert-success" role="alert">
+               <!--   <h4 class="alert-heading">Modifca Password</h4>    -->
+                 <p>{{Message}}</p>
+               </div>
+              </div>
+
+
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+           </form>
+
+          </div>
+
+
+
+    </div>
+
+
+
+
+    </div>
+    <div class="tab-pane p-4 fade" id="tab2" role="tabpane2" aria-labelledby="tab2-tab">
+      merda diarrea
+    </div>
+     <div class="tab-pane p-4 fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+      solo diarrea
+    </div>
+    </div>
+
+

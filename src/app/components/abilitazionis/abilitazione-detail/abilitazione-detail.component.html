@@ -1,0 +1,232 @@
+<p>abilitazione-detail works!</p>
+
+
+<!-- {{abil | json}} -->
+<!--{{user | json}} -->
+
+<div class="container">
+  <div class="row col-md-12">    <!--  <div class="row justify-content-md-center"> -->
+    <div class="col-md-auto">
+       <form name="changeAbilForm" #changeAbilForm=ngForm >  <!--  (ngSubmit)="onSubmit(changeAbilForm)"-->
+       <input hidden #id="ngModel"  [(ngModel)]="abil.id" class="form-control" name="id" id="id">
+    </form>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row">
+    <div class="form-group col-md-6">
+      <label for="cognome">Cognome</label>
+      <input disabled #cognome="ngModel"  [(ngModel)]="user.cognome" class="form-control" name="cognome" id="cognome"  placeholder="Inserire cognome">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="nome">Nome</label>
+      <input disabled #nome="ngModel"  [(ngModel)]="user.nome" class="form-control" name="nome" id="nome"  placeholder="Inserire nome">
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="form-group col-md-6">
+      <label for="cognome">Username</label>
+      <input disabled #username="ngModel"  [(ngModel)]="user.username" class="form-control" name="username" id="username" placeholder="Inserire profilo">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="nome">Profilo</label>
+
+   <!--   <input disabled #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" class="form-control ruoloSuper" name="d_ruolo_day" id="d_ruolo_day">   -->
+
+      <div *ngIf="userSuper" >
+      <!--   {{user.d_ruolo_day}}   -->
+        <input disabled  #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" style="color: #FF0000" class="form-control ruoloSuper" name="d_ruolo_day" id="d_ruolo_day">
+      </div>
+      <div *ngIf="userGuest" >
+         <!--   {{user.d_ruolo_day}}   -->
+        <input disabled  #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" style="color: #10d84c" class="form-control ruoloGuest" name="d_ruolo_day" id="d_ruolo_day">
+      </div>
+      <div *ngIf="userOther" >
+         <!--   {{user.d_ruolo_day}}   -->
+        <input disabled  #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" style="color: yellow" class="form-control ruoloOther" name="d_ruolo_day" id="d_ruolo_day">
+      </div>
+
+<!-- ho provato a impostare il colore del testo im funzione del ruolo utente, ma non visualizza test (imposta bordo e sfondo)
+      {{user.idRuolo_Day}}
+      <div *ngIf="userSuper" >
+        <input #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" style="color: #FF0000" class="form-control " name="d_ruolo_day" id="d_ruolo_day">
+      </div>
+      <div [ngSwitch]="user.idRuolo_Day">
+        merda  {{user.idRuolo_Day}}
+        <div *ngSwitchCase=-1 >
+            <input readonly #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" style="color: #FF0000" class="form-control text-success ruoloSuper" name="d_ruolo_day" id="d_ruolo_day">
+        </div>
+        <div *ngSwitchCase='0' class="text-primary">
+          <input readonly #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" class="form-control" name="d_ruolo_day" id="d_ruolo_day">
+       </div>
+      </div>
+
+
+      <div [ngPlural]="user.idRuolo_Day">
+
+        <ng-template ngPluralCase="=0">There's currently nobody available</ng-template>
+        <ng-template ngPluralCase="=-1" >
+
+          <input readonly #d_ruolo_day="ngModel"  [(ngModel)]="user.d_ruolo_day" class="form-control ruoloSuper" name="d_ruolo_day" id="d_ruolo_day">
+          There's only one person!</ng-template>
+        <ng-template ngPluralCase="other">There are {{ user.d_ruolo_day }} persons</ng-template>
+      </div>
+
+-->
+
+
+
+    </div>
+  </div>
+
+  <br>
+  <div class="form-group row">
+    <label for="funzione" class="col-sm-1 col-form-label">Funzione</label>
+    <div class="col-sm-4">
+       <input disabled type="text" #funzione="ngModel"  [(ngModel)]="abil.funzione" class="form-control" name="funzione" id="funzione" placeholder="Inserire funzione">
+    </div>
+  </div>
+
+  <br>
+
+  <div class="form-group row">
+    <div class="form-group col-md-2">
+      <label for="enabledNull">non Visibile</label>
+      <input disabled type="text"  #enabledNull="ngModel"  [(ngModel)]="abil.enabledNull" class="form-control" name="enabledNull" id="enabledNull"  ngModel>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="enabledNull">Inquiry</label>
+      <input disabled #enabledInqu="ngModel"  [(ngModel)]="abil.enabledInqu" class="form-control" name="enabledNull" id="enabledNull">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="enabledEdit">Modificabile</label>
+      <input disabled #enabledEdit="ngModel"  [(ngModel)]="abil.enabledEdit" class="form-control" name="enabledEdit" id="enabledEdit">
+     </div>
+  </div>
+
+<!--  aaaa
+  <div class="form-group row">
+    <div class="form-group col-md-2">
+      <label for="enabledNull">non Visibile</label>
+      <input disabled type="text"  #enabledNull="ngModel"  [(ngModel)]="abil.enabledNull" class="form-control" name="enabledNull" id="enabledNull"  ngModel>
+
+    </div>
+
+
+
+    <div class="form-group col-md-6">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="S" name="Hidden" formControlName="Hidden" (click)="cambiaHidden($event)">
+        <label class="form-check-label" for="flexRadioDefault1">
+          Attiva
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N" name="Hidden" formControlName="Hidden" (click)="cambiaHidden($event)">
+        <label class="form-check-label" for="flexRadioDefault2">
+          Disattiva
+        </label>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-group row">
+    <div class="form-group col-md-2">
+      <label for="enabledNull">Inquiry</label>
+      <input disabled #enabledInqu="ngModel"  [(ngModel)]="abil.enabledInqu" class="form-control" name="enabledNull" id="enabledNull">
+    </div>
+    <div class="form-group col-md-6">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="S" name="Inquiry" formControlName="Inquiry" (click)="cambiaInquiry($event)">
+        <label class="form-check-label" for="flexRadioDefault1">
+          Attiva
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N" name="Inquiry" formControlName="Inquiry" (click)="cambiaInquiry($event)">
+        <label class="form-check-label" for="flexRadioDefault2">
+          Disattiva
+        </label>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-group row">
+    <label for="enabledEdit">Modificabile</label>
+    <div class="form-group col-md-2">
+      <input disabled #enabledEdit="ngModel"  [(ngModel)]="abil.enabledEdit" class="form-control" name="enabledEdit" id="enabledEdit">
+    </div>
+    <div class="form-group col-md-6">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="S" name="modificabile" formControlName="modificabile" (click)="cambiaModificabile($event)">
+        <label class="form-check-label" for="flexRadioDefault1">
+          Attiva
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="N" name="modificabile" formControlName="modificabile" (click)="cambiaModificabile($event)">
+        <label class="form-check-label" for="flexRadioDefault2">
+          Disattiva
+        </label>
+      </div>
+
+
+
+
+    </div>
+  </div>   -->
+
+
+  <hr>
+  <br>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="N"  formControlName="Hidden" (click)="cambiaOption($event)">
+    <label class="form-check-label" for="inlineRadio1">Non Visibile</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="I" formControlName="Inquiry" (click)="cambiaOption($event)">
+    <label class="form-check-label" for="inlineRadio2">Inquiry</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="E" formControlName="modificabile" (click)="cambiaOption($event)" >
+    <label class="form-check-label" for="inlineRadio3">Modificabile</label>
+  </div>
+
+  <br>
+  <br>
+  <div class="form-row">
+    <div class="col-sm-10 offset-2">
+      <button type="submit" class="btn btn-primary float-left" [disabled]="!effettuataModifica"  (click)="onSubmit(changeAbilForm)">Aggiorna
+        <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+
+
+  <br>
+
+  <div class="form-row">
+    <div class="col-md-12">
+       <!-- messaggi -->
+      <div *ngIf="!alertSuccess && isVisible" class="alert alert-danger" role="alert">
+        <!--   <h4 class="alert-heading">Errore in elenco</h4>    -->
+              <div class="col md-12">
+                <p>{{Message}}</p>
+              </div>
+       </div>
+       <div *ngIf="alertSuccess && isVisible" class="alert alert-success" role="alert">
+         <!--   <h4 class="alert-heading">Modifca Password</h4>    -->
+              <div class="col md-12">
+                <p>{{Message}}</p>
+              </div>
+        </div>
+      </div>
+   </div>
+
+
+
+
+</div>

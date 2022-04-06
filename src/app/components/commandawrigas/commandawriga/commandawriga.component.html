@@ -1,0 +1,71 @@
+
+
+
+
+     <td >{{commandawriga.id}}</td>     <!-- <td >{{i}}</td>   -->
+     <td>{{commandawriga.descrizione_prodotto}}</td>
+     <td>{{categoria.d_categoria}}</td>
+     <td>{{commandawriga.prezzo_day}}</td>
+     <td>{{commandawriga.qta}}</td>
+     <td>{{commandawriga.qta * commandawriga.prezzo_day}}</td>
+   <!--  <td [style.color]="getColor(prodotto.aMenu)"><strong>{{prodotto.aMenu}}</strong> </td>   -->
+     <!--   volendo impostare molte proprietà
+     <td [style.color]="getColor(prodotto.aMenu)"
+         [style.background-color]="getbackgroundColor(prodotto.aMenu)">{{prodotto.aMenu}} </td>
+         -->
+     <td class="buttons">
+       <div class="row">
+         <div class="col-sm-4">
+           <!-- (click)="showDetail()" modalità con soluzione 1 quando passavo al componente di dettaglio -->
+             <button   class="btn btn-danger btn-sm"  (click)="open(content)" >
+                   <fa-icon [icon]="faTrash" fixed="true"></fa-icon>
+              </button>
+         </div>
+         <div class="col-sm-4">
+          <!-- (click)="showDetail()" modalità con soluzione 1 quando passavo al componente di dettaglio -->
+            <button   class="btn btn-primary  btn-sm" (click)="aggiornaProdotto()"  >
+                  <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+              <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+             </button>
+        </div>
+       </div>
+     </td>
+<!--   booh !!
+     <div *ngIf="!alertSuccess" class="alert alert-danger" role="alert">
+         <p>{{Message}}</p>
+      </div>
+-->
+
+     <ng-template #content let-modal>
+      <div class="modal-header modal-header-color">
+        <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <p>confermi la cancellazione del prodotto ordinato  &nbsp;&nbsp;</p>
+          <p></p>
+          <p><strong>{{commandawriga.descrizione_prodotto}}</strong>&nbsp;</p>
+          <!--   esempio di calendario che funziona benissimo
+          <div class="form-group">
+            <label for="dateOfBirth">Date of birth</label>
+            <div class="input-group">
+              <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+              </div>
+            </div>
+          </div>
+          -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+
+        <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+          <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+        </button>
+      </div>
+    </ng-template>

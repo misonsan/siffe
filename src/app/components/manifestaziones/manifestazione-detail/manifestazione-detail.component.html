@@ -1,0 +1,210 @@
+
+
+<div class="container borde">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+
+
+  <div class="header_Edit title_Edit" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+
+      <strong>{{title}}</strong>
+
+  </div>
+  <!--
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    functionEdit: {{functionEdit}}&nbsp;&nbsp;functionEdits: {{functionEdits}}
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>  -->
+
+
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-md-12 ">{{title}}</caption>
+  </div>
+
+
+<br>
+
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="manif.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="manif.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+        <!-- Descrizione  -->
+         <div class="form-row">
+          <div class="mb-3 row margini">
+            <label for="descManif" class="col-sm-2 col-form-label">Descrizione:</label>
+            <div class="col-sm-5">
+            <input type="text" #descManif="ngModel"  [(ngModel)]="manif.descManif" class="form-control" name="descManif" id="descManif" required minlength="4" maxlength="50" pattern="[0-9a-zA-Z\s]*" placeholder="Inserire Descrizione">
+              <div *ngIf="descManif.invalid && (descManif.dirty || descManif.touched)" class="alert-danger">
+                <div *ngIf="descManif.errors.required">
+                    <span>la descrizione è obbligatoria</span>
+                </div>
+                <div *ngIf="descManif.errors.minlength">
+                   <span>la descrizione deve essere di almeno 4 caratteri</span>
+                </div>
+                <div *ngIf="descManif.errors.maxlength">
+                    <span>la descrizione non può essere più lunga di 50 caratteri</span>
+                 </div>
+              </div>
+            </div>
+          </div>
+         </div>
+        <!-- Buono Pasto  -->
+        <div class="form-row">
+        <div class="mb-3 row margini">
+          <label for="buonoPastoCommanda" class="col-sm-2 col-form-label">Buono Pasto:</label>  <!--    pattern numerico  \d+(\.\d*)?|\.\d+*    /^[0-9]+(\.[0-9]*){0,1}$/g      ^[0-9]d{0,9}(.d{1,2})?%?$       -->
+          <div class="col-sm-2">
+          <input NumbersOnly type="text" #buonoPastoCommanda="ngModel"  [(ngModel)]="manif.buonoPastoCommanda" class="form-control" name="buonoPastoCommanda" id="buonoPastoCommanda" pattern="^-?[0-9][0-9,\.]+$" placeholder="Inserire Buono Pasto">
+          <div *ngIf="buonoPastoCommanda.invalid && (buonoPastoCommanda.dirty || buonoPastoCommanda.touched)" class="alert-danger">
+          <!--   <div class="valid-feedback">Campo corretto</div>
+                <div class="invalid-feedback">insersci un valore corretto</div>   -->
+              <div *ngIf="buonoPastoCommanda.errors.required">
+                  <span>Inserire l'importo del buono pasto</span>
+              </div>
+              <div *ngIf="buonoPastoCommanda.errors?.pattern">
+                  <span>il buono pasto non può essere negativo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coperto -->
+        <div class="form-row">
+      <div class="mb-3 row margini">
+        <label for="impCoperto" class="col-sm-2 col-form-label">Coperto:</label>
+        <div class="col-sm-2">
+        <input #impCoperto="ngModel"  [(ngModel)]="manif.impCoperto" class="form-control" name="impCoperto" id="impCoperto" pattern="^-?[0-9][0-9,\.]+$" placeholder="Inserire Coperto">
+            <div *ngIf="impCoperto.invalid && (impCoperto.dirty || impCoperto.touched)" class="alert-danger">
+              <div *ngIf="impCoperto.errors.required">
+                  <span>Inserire il coperto</span>
+              </div>
+              <div *ngIf="impCoperto.errors?.pattern">
+                  solo valori posotivi
+                </div>
+             </div>
+        </div>
+      </div>
+        </div>
+
+        <!-- radio button per selezione stampa  radio-inline -->
+        <div class="row">
+          <div class="form-group col-md-5">
+            Impostare se stampa interna &nbsp;&nbsp;
+
+            <label class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="S" (change)="changeStampa($event)" >
+              <label class="form-check-label" for="inlineRadio1">Si</label>
+            </label>
+            <label class="form-check form-check-inline">
+                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="N" (change)="changeStampa($event)" >
+                <label class="form-check-label" for="inlineRadio2">No</label>
+            </label>
+          </div>
+          <div class="form-group col-md-3">
+            <input disabled  [(ngModel)]="statoStampa" class="form-control" name="statoStampa" id="statoStampa" [style.color]="manif.stampeBackOffice == 'N' ? 'red' : 'green'">
+          </div>
+        </div>
+
+      <br>
+  <!-- Note  -->
+       <div class="input-group">
+    <div for="note" class="input-group-prepend">
+      <span class="input-group-text">Note</span>
+    </div>&nbsp;&nbsp;
+    <textarea  aria-label="With textarea"  #note="ngModel"  [(ngModel)]="manif.noteManifestazione" class="form-control" name="note" id="note"  placeholder="Inserire eventuali note"></textarea>
+       </div>
+<!-- fine  -->
+  <!-- Bottoni funzionali -->
+      <!--      N = {{functionNew}}   E = {{functionEdit}}   S = {{functionEdits}}  I = {{functionInqu}}  -->
+
+
+       <br>
+       <div class="footer" >
+            <div class="row col-sm-10 offset-2">
+              <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-success btn-md " (click)="conferma()">Conferma
+                  <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-primary btn-md " (click)="reset()">Reset
+                  <fa-icon [icon]="faTimes"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3"  *ngIf="functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-danger btn-md "  (click)="open(content)"> Cancella
+                  <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3" >
+                <button  class="btn btn-info btn-md "  (click)="goback()"> Ritorna
+                  <fa-icon [icon]="faReply"  fixed="true"></fa-icon>
+                </button>
+              </div>
+            </div>
+       </div>
+       <br>
+  <!--   messaggio con esito operazione -->
+
+       <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+    <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+         <p>{{Message}}</p>
+         <hr>
+         <p class="mb-0">{{Message1err}}</p>
+       </div>
+       <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+  <!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+         <p>{{Message}}</p>
+         <hr>
+         <p class="mb-0"></p>
+       </div>
+
+
+
+
+
+
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header modal-header-color">
+    <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <p>confermi la cancellazione del collaboratore &nbsp;&nbsp;</p>
+      <p></p>
+      <p><strong>{{manif.cognome}}&nbsp;&nbsp;{{manif.nome}}</strong>&nbsp;?</p>
+      <!--   esempio di calendario che funziona benissimo
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+      -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+
+    <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+      <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+    </button>
+  </div>
+</ng-template>
+

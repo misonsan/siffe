@@ -1,0 +1,248 @@
+<p>spesa-detail works!</p>
+
+
+<div class="container">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+
+
+  <div class="header_Edit title_Edit col-md-12 borde" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+
+      <strong>{{title}}</strong>
+
+  </div>
+  <!--
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    functionEdit: {{functionEdit}}&nbsp;&nbsp;functionEdits: {{functionEdits}}
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>  -->
+
+
+  <div class="header_New" *ngIf="functionNew || functionnewf">
+    <div class="col-md-12">
+      <caption class="title_New col-md-12">{{title}}</caption>
+    </div>
+
+  </div>
+
+
+<br>
+
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="spesa.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="spesa.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+
+
+        functionUser: {{functionUser}}
+
+
+
+        <br>
+              <!-- Descrizione  per  chiamata da fornitore-detail-spesa -->
+         <div class="form-row " *ngIf="functionnewf === true ||  functionEdits === true">
+            <div class="mb-3 row margini">
+              <label for="rogionesociale" class="col-sm-2 col-form-label">Ragione Sociale:</label>
+              <div class="col-sm-5">
+                  <input disabled type="text" #rogionesociale="ngModel"  [(ngModel)]="fornitore.ragsociale" class="form-control" name="rogionesociale" id="rogionesociale" >
+              </div>
+            </div>
+            <div class="col-md-8 row">
+              <label for="localita" class="col-sm-2 col-form-label">localita</label>
+              <div class="col-sm-5">
+                <input disabled type="text" #localita="ngModel"  [(ngModel)]="fornitore.localita" class="form-control" name="localita" id="localita" >
+              </div>
+            </div>
+         </div>
+         <br>
+<!--   non serve
+         <div class="col-md-4 was-validated form-inline"  *ngIf="functionnewf === false || functionNew === true">
+          <div class="row">
+              <div class="col-md-2">Fornitore</div>&nbsp;&nbsp;&nbsp;&nbsp;
+              <div class="col-md-8 ">
+                <select [(ngModel)]="selectedFornitore" ngModel name="fornitore" id="fornitore" class="btn btn-primary dropdown-toggle borde"  type="button" class="form-select" required (change)="onSelectedFornitore($event.target.value)">
+                  <option value="">Seleziona il Fornitore</option>
+                  <option *ngFor="let fornitore of fornitori" [value]="fornitore.id"  class="form-control"  >{{fornitore.ragsociale}}</option>
+              </select>
+              </div>
+            <div class="invalid-feedback">effettuare la scelta del Fornitore</div>
+
+          </div>
+         </div>
+         <br>
+-->
+
+     <!-- Documento  -->
+        <div class="form-row">
+          <div class="mb-3 row margini">
+            <label for="documento" class="col-sm-2 col-form-label">Documento:</label>
+            <div class="col-sm-5">
+            <input type="text" #documento="ngModel"  [(ngModel)]="spesa.documento" class="form-control" name="documento" id="documento" required minlength="4" maxlength="50" pattern="[0-9a-zA-Z/\s]*" placeholder="Inserire il documento">  <!-- [0-9a-zA-Z\s]* -->
+              <div *ngIf="documento.invalid && documento.dirty && documento.touched" class="alert-danger">
+                <div *ngIf="documento.errors.required">
+                    <span>il documento è obbligatoria</span>
+                </div>
+                <div *ngIf="documento.errors.minlength">
+                  <span>il documento deve essere di almeno 4 caratteri</span>
+                </div>
+                <div *ngIf="documento.errors.maxlength">
+                    <span>il documento non può essere più lunga di 50 caratteri</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <div class="col-md-6 was-validated form-inline" >  <!--  form-group -->
+          <div class="row">
+              <div class="col-md-2">Stato</div>&nbsp;&nbsp;&nbsp;&nbsp;
+              <div class="col-md-6 ">
+                <select [(ngModel)]="selectedStato" ngModel name="stato" id="stato" class="btn btn-primary dropdown-toggle borde"  type="button" class="form-select" required (change)="onSelectedStato($event.target.value)">
+                  <option value="">Seleziona lo stato</option>
+                  <option *ngFor="let stato of stati" [value]="stato.id"  class="form-control"  >{{stato.d_stato_spesa}}</option>
+              </select>
+              </div>
+            <div class="invalid-feedback">effettuare la scelta dello stato</div>
+
+          </div>
+        </div>
+        <br>
+
+
+
+
+
+
+
+
+
+     <!-- motivo  -->
+        <div class="form-row">
+          <div class="mb-3 row margini">
+            <label for="motivo" class="col-sm-2 col-form-label">motivo:</label>
+            <div class="col-sm-5">
+            <input type="text" #motivo="ngModel"  [(ngModel)]="spesa.motivo" class="form-control" name="motivo" id="motivo" required minlength="4" maxlength="50" pattern="[0-9a-zA-Z/\s]*" placeholder="Inserire il motivo">  <!-- [0-9a-zA-Z\s]* -->
+              <div *ngIf="motivo.invalid && motivo.dirty && motivo.touched" class="alert-danger">
+                <div *ngIf="motivo.errors.required">
+                    <span>il motivo è obbligatoria</span>
+                </div>
+                <div *ngIf="motivo.errors.minlength">
+                  <span>il motivo deve essere di almeno 4 caratteri</span>
+                </div>
+                <div *ngIf="motivo.errors.maxlength">
+                    <span>il motivo non può essere più lunga di 50 caratteri</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="mb-3 row margini">
+            <label for="importo" class="col-sm-2 col-form-label">importo:</label>
+            <div class="col-sm-5">
+              <input type="text" #importo="ngModel"  [(ngModel)]="spesa.importo" class="form-control" name="importo" id="importo" required pattern="^[1-9]\d*(\.\d+)?$" placeholder="Inserire importo">  <!-- ^[0-9]*$              [0-9a-zA-Z\s]* -->
+                <div *ngIf="importo.invalid && importo.dirty && importo.touched" class="alert-danger">
+                  <div *ngIf="importo.errors.required">
+                      <span>importo è obbligatoria</span>
+                  </div>
+                  <div *ngIf="motivo.errors.pattern">
+                    <span>inserire solo numero</span>
+                  </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+        <br>
+
+     <div class="footer" >
+          <div class="row col-sm-10 offset-2">
+            <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits || functionnewf">
+              <button [disabled]="fm.invalid " class="btn btn-success btn-md " (click)="conferma()">Conferma
+                <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+              </button>
+            </div>
+            <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits || functionnewf">
+              <button [disabled]="fm.invalid " class="btn btn-primary btn-md " (click)="reset()">Reset
+                <fa-icon [icon]="faTimes"  fixed="true"></fa-icon>
+              </button>
+            </div>
+            <div class="col-sm-3"  *ngIf="functionEdits ">
+              <button [disabled]="fm.invalid " class="btn btn-danger btn-md "  (click)="open(content)"> Cancella
+                <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+              </button>
+            </div>
+            <div class="col-sm-3" >
+              <button  class="btn btn-info btn-md "  (click)="goback()"> Ritorna
+                <fa-icon [icon]="faReply"  fixed="true"></fa-icon>
+              </button>
+            </div>
+          </div>
+     </div>
+     <br>
+<!--   messaggio con esito operazione -->
+
+     <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+  <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+       <p>{{Message}}</p>
+       <hr>
+       <p class="mb-0">{{Message1err}}</p>
+     </div>
+     <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+<!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+       <p>{{Message}}</p>
+       <hr>
+       <p class="mb-0"></p>
+     </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header modal-header-color">
+    <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <p>confermi la cancellazione della spesa &nbsp;&nbsp;</p>
+      <p></p>
+      <p><strong>{{spesa.documento}}&nbsp;&nbsp;per € &nbsp;&nbsp;{{spesa.importo}}</strong>&nbsp;?</p>
+      <!--   esempio di calendario che funziona benissimo
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+      -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+
+    <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+      <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+    </button>
+  </div>
+</ng-template>
+
+
+
+<!-- prodotto-anag-detail1 works! -->
+
+
+

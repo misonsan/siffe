@@ -1,0 +1,385 @@
+<p>commanda-preview works!</p>
+
+<!--   mersione 1 -->
+<!--
+<div  id ="print-section">
+    <div class="container">
+      <div class="card">
+          <div class="card-header">
+                <div class="navbar-brand" >
+                  <div class="d-inline "> <img src="assets/images/logoSanfra.png" width="60" height="60" alt="logo"></div>
+                  <div class="d-inline ">&nbsp;&nbsp;<strong>{{title}}</strong></div>
+                </div>
+                <div  style="text-align: left; font-size: 25px;">
+                </div>
+          </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row mb-5">
+
+          <div class="col-sm-7">
+              <div>Commanda:&nbsp;&nbsp; {{commanda.id}}&nbsp;&nbsp;{{giornata.dtGiornata  | date:'dd/MM/yyyy'}}</div>
+              <div>Persone:&nbsp;&nbsp; {{commanda.numPersone}}&nbsp;&nbsp;Tavolo:&nbsp;{{commanda.numTavolo}}</div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-5">
+          <table >
+            <tr >
+              <td><strong>Cliente</strong></td>&nbsp;&nbsp;
+              <td style="text-align: left; font-size: 15px;">
+                {{commanda.anagrafica_cliente}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-7">
+          <--  vuoto
+        </div>
+      </div>
+
+      <div class="row col-md-12 ">
+          <div class="row">
+            <div class="col col-md-12 offset-4">
+
+              <--  inserire i dettagli di incasso e resto
+
+                      <div class="col col-12">
+
+                        <table>
+                          <tr>
+                            <th style='text-align:center; vertical-align:middle' colspan="5">I   m   p   o   r   t   o</th>
+                          </tr>
+                          <tr>
+                            <th class="form-group col-sm-2"><strong>Prodotti</strong></th>
+                            <th class="form-group col-sm-2"><strong>Coperto</strong></th>
+                            <th class="form-group col-sm-2"><strong>Totale</strong></th>
+                            <th class="form-group col-sm-2"><strong>Incassato</strong></th>
+                            <th class="form-group col-sm-2"><strong>Resto</strong></th>
+                          </tr>
+
+                          <tr>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.importoProdotti}}
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.importoCoperto}}
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2"><strong>{{commanda.importodaPagare}}</strong>
+
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.importoPagato}}
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.resto}}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+            </div>
+
+
+
+          </div>
+      </div>
+
+<hr>
+
+<br>
+
+<div class="row col-md-8 offset-1">
+<table class="table table-striped table-sm shadow-lg p-3  bg-white">
+  <tr >
+
+      <th>Descrizione</th>
+      <th>Prezzo</th>
+      <th>Qta</th>
+      <th>Valore</th>
+      <th></th>
+  </tr>
+  <tr  *ngFor ="let commandariga of commandarighe; let i = index" >
+
+        <td>{{commandariga.descrizione_prodotto}}</td>
+        <td>{{commandariga.prezzo}}</td>
+        <td>{{commandariga.qta_ord}}</td>
+        <td>{{commandariga.prezzo * commandariga.qta_ord}}</td>
+  </tr>
+</table>
+</div>
+
+
+<br>
+
+<div class="row col-md-8 offset-1">
+  <table class="table table-striped table-sm shadow-lg p-3  bg-white">
+    <tr >
+
+          <th></th>
+          <th></th>
+          <th style='text-align:center; vertical-align:middle' colspan="2">Incassato</th>
+
+          <th style='text-align:center; vertical-align:middle' colspan="2">Reso</th>
+
+          <th></th>
+      </tr>
+    <tr >
+
+        <th>Oper.</th>
+        <th>Taglia</th>
+        <th>Qta</th>
+        <th>Valore</th>
+        <th>Qta</th>
+        <th>Valore</th>
+        <th></th>
+    </tr>
+
+    <tr  *ngFor ="let cassa of cassec; let i = index" >
+
+   <td>{{i + 1}}</td>
+   <td>{{cassa.d_taglia}}</td>
+
+
+  <td [style.visibility]="cassa.qtaInc == 0 ? 'hidden' : null">{{cassa.qtaInc}}</td>
+  <td [style.visibility]="cassa.valoreInc == 0 ? 'hidden' : null">{{cassa.valoreInc}}</td>
+  <td [style.visibility]="cassa.qtaRes == 0 ? 'hidden' : null">{{cassa.qtaRes}}</td>
+  <td [style.visibility]="cassa.valoreRes == 0 ? 'hidden' : null">{{cassa.valoreRes}}</td>
+
+
+  </tr>
+  </table>
+
+</div>
+
+
+
+ <div class="card-body">
+  <div class="row mb-5">
+
+
+
+    <div class="col-sm-7">
+        <div>Cassiere</div>
+        <div>{{cassiere}}</div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+</div>
+-->
+
+
+<!--   mersione 2 -->
+
+<div  id ="print-section">
+    <div class="container">
+      <div class="card">
+          <div class="card-header">
+                <div class="navbar-brand" >
+                  <div class="d-inline "> <img src="assets/images/logoSanfra.png" width="60" height="60" alt="logo"></div>
+                  <div class="d-inline ">&nbsp;&nbsp;<strong>{{title}}</strong></div>
+                </div>
+                <div  style="text-align: left; font-size: 25px;">
+                </div>
+          </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row mb-5">
+
+          <div class="col-sm-7">
+              <div>Commanda:&nbsp;&nbsp; {{commanda.id}}&nbsp;&nbsp;{{giornata.dtGiornata  | date:'dd/MM/yyyy'}}</div>
+              <div>Persone:&nbsp;&nbsp; {{commanda.numPersone}}&nbsp;&nbsp;Tavolo:&nbsp;{{commanda.numTavolo}}</div>
+              <div>Persone:&nbsp;&nbsp; {{commanda.importoCoperto}}
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-5">
+          <table >
+            <tr >
+              <td><strong>Cliente</strong></td>&nbsp;&nbsp;
+              <td style="text-align: left; font-size: 15px;">
+                {{commanda.anagrafica_cliente}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-7">
+          <!--  vuoto  -->
+        </div>
+      </div>
+<!--
+      <div class="row col-md-12 ">
+          <div class="row">
+            <div class="col col-md-12 offset-4">
+
+               inserire i dettagli di incasso e resto
+
+                      <div class="col col-12">
+
+                        <table>
+                          <tr>
+                            <th style='text-align:center; vertical-align:middle' colspan="5">I   m   p   o   r   t   o</th>
+                          </tr>
+                          <tr>
+                            <th class="form-group col-sm-2"><strong>Prodotti</strong></th>
+                            <th class="form-group col-sm-2"><strong>Coperto</strong></th>
+                            <th class="form-group col-sm-2"><strong>Totale</strong></th>
+                            <th class="form-group col-sm-2"><strong>Incassato</strong></th>
+                            <th class="form-group col-sm-2"><strong>Resto</strong></th>
+                          </tr>
+
+                          <tr>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.importoProdotti}}
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.importoCoperto}}
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2"><strong>{{commanda.importodaPagare}}</strong>
+
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.importoPagato}}
+                            </td>
+                            <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.resto}}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+            </div>
+
+
+
+          </div>
+      </div>   -->
+
+<hr>
+
+<br>
+
+<div class="row col-md-8 offset-1">
+<table class="table table-striped table-sm shadow-lg p-3  bg-white">
+  <tr >
+
+      <th>Descrizione</th>
+      <th>Prezzo</th>
+      <th>Qta</th>
+      <th>Valore</th>
+      <th></th>
+  </tr>
+  <tr  *ngFor ="let commandariga of commandarighe; let i = index" >
+
+        <td>{{commandariga.descrizione_prodotto}}</td>
+        <td>{{commandariga.prezzo}}</td>
+        <td>{{commandariga.qta_ord}}</td>
+        <td>{{commandariga.prezzo * commandariga.qta_ord}}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: center;" class="form-group col-sm-2">
+                              {{commanda.importoProdotti}}
+    </td>
+  <tr>
+</table>
+</div>
+
+
+<br>
+
+<div class="row col-md-8 offset-1">
+  <table class="table table-striped table-sm shadow-lg p-3  bg-white">
+    <tr >
+
+          <th></th>
+          <th></th>
+          <th style='text-align:center; vertical-align:middle' colspan="2">Incassato</th>
+
+          <th style='text-align:center; vertical-align:middle' colspan="2">Reso</th>
+
+          <th></th>
+      </tr>
+    <tr >
+
+        <th>Oper.</th>
+        <th>Taglia</th>
+        <th>Qta</th>
+        <th>Valore</th>
+        <th>Qta</th>
+        <th>Valore</th>
+        <th></th>
+    </tr>
+
+    <tr  *ngFor ="let cassa of cassec; let i = index" >
+
+   <td>{{i + 1}}</td>
+   <td>{{cassa.d_taglia}}</td>
+
+
+  <td [style.visibility]="cassa.qtaInc == 0 ? 'hidden' : null">{{cassa.qtaInc}}</td>
+  <td [style.visibility]="cassa.valoreInc == 0 ? 'hidden' : null">{{cassa.valoreInc}}</td>
+  <td [style.visibility]="cassa.qtaRes == 0 ? 'hidden' : null">{{cassa.qtaRes}}</td>
+  <td [style.visibility]="cassa.valoreRes == 0 ? 'hidden' : null">{{cassa.valoreRes}}</td>
+
+
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: center;" class="form-group col-sm-2">
+      {{commanda.importoPagato}}
+    </td>
+    <td></td>
+    <td style="text-align: center;" class="form-group col-sm-2">
+      {{commanda.resto}}
+    </td>
+  </tr>
+  </table>
+
+</div>
+
+<br>
+
+ <div class="card-body">
+  <div class="row mb-5">
+
+
+
+    <div class="col-sm-7">
+        <div>Cassiere</div>
+        <div>{{cassiere}}</div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- bottone di stampa -->
+<div class="row ">
+  <div class="col col-md-8">
+  </div>
+  <div class="col col-md-4">
+    <button class="btn btn-primary" [useExistingCss]="true" printSectionId ="print-section" ngxPrint>Stampa</button>
+  </div>
+  </div>

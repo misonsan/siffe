@@ -1,0 +1,351 @@
+<div class="container"  id ="print-section">
+  <div class="row col-md-12">
+   <!--<form #fm ="ngForm">   -->
+      <input Hidden #id="ngModel"  [(ngModel)]="commanda.id" class="form-control" name="id" id="id">
+            <!--prima parte del form - logo e titolo  -->
+            <div class="row" >
+              <div class="col-md-6">
+                <table class="col col-md-12">
+                  <tr>
+                    <td style="text-align: center;">
+                      <a class="navbar-brand" href="#">
+                        <img src="assets/images/logoSanfra.png" width="60" height="60" alt="logo">
+                      </a>
+                    </td>
+                    <td style="text-align: left; font-size: 25px;">
+                      <strong>{{title}}</strong>
+                    </td>
+                </tr>
+              </table>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+
+              <div class="col-md-7">
+                  <!--    vuoto -->
+              </div>
+              <div class="col-md-5" >
+
+                <div class="d-flex flex-row-reverse">
+                  <label class="col-sm-1 col-form-label">commanda:</label>
+                  {{commanda.id}}
+                  <br>
+                  <label class="col-sm-1 col-form-label">Data:</label>
+                  {{giornata.dtGiornata  | date:'dd/MM/yyyy'}}
+
+                  </div>
+
+
+
+
+
+<!--
+              <table>
+                  <tr>
+                    <td  style="text-align: center;">
+                      <label class="col-sm-1">commanda:</label>
+                    </td>
+                    <td class="col-md-1" >
+                      {{commanda.id}}
+                    </td>
+                    <td class="col-md-1">Data:</td>
+                    <td class="col-md-1">
+                     {{giornata.dtGiornata  | date:'dd/MM/yyyy'}}
+                   </td>
+                  </tr>
+                </table>   -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                   <!--  vuoto  -->
+              </div>
+              <div class="col-md-5">
+                <table>
+                  <tr>
+                    <td  style="text-align: center;">
+                      <label class="col-sm-1 col-form-label">Persone:</label>&nbsp;
+                    </td>
+                    <td class="col-md-1" >
+                      {{commanda.numPersone}}
+                    </td>
+                    <td class="col-md-1">Tavolo:</td>&nbsp;
+                    <td class="col-md-1">
+                     {{commanda.numTavolo}}
+                   </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+
+              <br>
+              <div class="row">
+                <div class="col-md-5">
+                  <table >
+                    <tr >
+                      <td><strong>Cliente</strong></td>&nbsp;&nbsp;
+                      <td style="text-align: left; font-size: 15px;">
+                        {{commanda.anagrafica_cliente}}
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col-md-7">
+                   <!--  vuoto  -->
+                </div>
+              </div>
+
+            <!--terza parte parte del form - riassunto totali  -->
+            <div class="row col-md-12 ">
+               <!--
+             <div class="form-row">
+
+                <div class="row col col-md-6">
+                  a sinistra totali incassi
+
+                  <div class="col col-md-12">
+
+                    <--  inserire i dettagli di incasso e resto
+
+                            <div class="col col-12">
+
+                              <table>
+                                <tr>
+                                  <th style='text-align:center; vertical-align:middle' colspan="4">I  m  p  o  r  t  o</th>
+                                </tr>
+                                <tr>
+                                  <th class="form-group col-sm-3"><strong>Prodotti</strong></th>
+                                  <th class="form-group col-sm-3"><strong>Coperto</strong></th>
+                                  <th class="form-group col-sm-3"><strong>Incassato</strong></th>
+                                  <th class="form-group col-sm-3"><strong> Resto</strong></th>
+                                </tr>
+
+                                <tr>
+                                  <td style="text-align: center;">
+                                    {{commanda.importoProdotti}}
+                                  </td>
+                                  <td style="text-align: center;">
+                                    {{commanda.importoCoperto}}
+                                  </td>
+                                  <td style="text-align: center;">
+                                    {{commanda.importoPagato}}
+                                  </td>
+                                  <td style="text-align: center;">
+                                    {{commanda.resto}}
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                   </div>
+                </div>
+                <div class="row col col-md-6">
+                  a destra dettaglio banconote
+
+                  <div class="row col-md-12 ">
+
+
+                    <div class="col col-md-12">
+
+                      <table class="table table-striped table-sm shadow-lg p-3  bg-white borde">
+                        <tr >
+                          <--   <th>prog</th>
+                              <th></th>
+                              <th></th>
+                              <th style='text-align:center; vertical-align:middle' colspan="2">Incassato</th>
+
+                              <th style='text-align:center; vertical-align:middle' colspan="2">Reso</th>
+
+                              <th></th>
+                          </tr>
+                        <tr >
+                        <--   <th>prog</th>
+                            <th>Oper.</th>
+                            <th>Taglia</th>
+                            <th>Qta</th>
+                            <th>Valore</th>
+                            <th>Qta</th>
+                            <th>Valore</th>
+                            <th></th>
+                        </tr>
+
+                        <tr  *ngFor ="let moneypay of moneypays; let i = index" >
+
+                      <-- <td>{{i + 1}}</td>
+                        <td>{{moneypay.movimento}}</td>
+                        <td>{{moneypay.d_taglia}}</td>
+
+
+                      <td [style.visibility]="moneypay.nro_pezzi_entrata == 0 ? 'hidden' : null">{{moneypay.nro_pezzi_entrata}}</td>
+                      <td [style.visibility]="moneypay.imp_entrata == 0 ? 'hidden' : null">{{moneypay.imp_entrata}}</td>
+                      <td [style.visibility]="moneypay.nro_pezzi_uscita == 0 ? 'hidden' : null">{{moneypay.nro_pezzi_uscita}}</td>
+                      <td [style.visibility]="moneypay.imp_uscita == 0 ? 'hidden' : null">{{moneypay. imp_uscita}}</td>
+
+
+
+                      </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>   -->
+                  <div class="row">
+                    <div class="col col-md-12 offset-4">
+
+                      <!--  inserire i dettagli di incasso e resto -->
+
+                              <div class="col col-12">
+
+                                <table>
+                                  <tr>
+                                    <th style='text-align:center; vertical-align:middle' colspan="5">I   m   p   o   r   t   o</th>
+                                  </tr>
+                                  <tr>
+                                    <th class="form-group col-sm-2"><strong>Prodotti</strong></th>
+                                    <th class="form-group col-sm-2"><strong>Coperto</strong></th>
+                                    <th class="form-group col-sm-2"><strong>Totale</strong></th>
+                                    <th class="form-group col-sm-2"><strong>Incassato</strong></th>
+                                    <th class="form-group col-sm-2"><strong>Resto</strong></th>
+                                  </tr>
+
+                                  <tr>
+                                    <td style="text-align: center;" class="form-group col-sm-2">
+                                      {{commanda.importoProdotti}}
+                                    </td>
+                                    <td style="text-align: center;" class="form-group col-sm-2">
+                                      {{commanda.importoCoperto}}
+                                    </td>
+                                    <td style="text-align: center;" class="form-group col-sm-2"><strong>{{commanda.importodaPagare}}</strong>
+
+                                    </td>
+                                    <td style="text-align: center;" class="form-group col-sm-2">
+                                      {{commanda.importoPagato}}
+                                    </td>
+                                    <td style="text-align: center;" class="form-group col-sm-2">
+                                      {{commanda.resto}}
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                    </div>
+
+
+
+                  </div>
+            </div>
+
+            <hr>
+
+            <br>
+             <!-- quarta parte parte del form - dati prodotti  -->
+            <div class="row col-md-8 offset-1">
+              <table class="table table-striped table-sm shadow-lg p-3  bg-white">
+                <tr >
+                <!--   <th>prog</th>  -->
+                    <th>Descrizione</th>
+                    <th>Prezzo</th>
+                    <th>Qta</th>
+                    <th>Valore</th>
+                    <th></th>
+                </tr>
+                <tr  *ngFor ="let commandariga of commandarighe; let i = index" >
+                     <!-- <td>{{i + 1}}</td> -->
+                      <td>{{commandariga.descrizione_prodotto}}</td>
+                      <td>{{commandariga.prezzo}}</td>
+                      <td>{{commandariga.qta_ord}}</td>
+                      <td>{{commandariga.prezzo * commandariga.qta_ord}}</td>
+                </tr>
+              </table>
+            </div>
+
+
+            <br>
+             <!--  quinta parte parte del form - dati banconote   -->
+            <div class="row col-md-8 offset-1">
+
+
+
+
+                <table class="table table-striped table-sm shadow-lg p-3  bg-white">
+                  <tr >
+                    <!--   <th>prog</th>  -->
+                        <th></th>
+                        <th></th>
+                        <th style='text-align:center; vertical-align:middle' colspan="2">Incassato</th>
+
+                        <th style='text-align:center; vertical-align:middle' colspan="2">Reso</th>
+
+                        <th></th>
+                    </tr>
+                  <tr >
+                  <!--   <th>prog</th>  -->
+                      <th>Oper.</th>
+                      <th>Taglia</th>
+                      <th>Qta</th>
+                      <th>Valore</th>
+                      <th>Qta</th>
+                      <th>Valore</th>
+                      <th></th>
+                  </tr>
+
+                  <tr  *ngFor ="let cassa of cassec; let i = index" >
+
+                 <td>{{i + 1}}</td>
+                 <td>{{cassa.d_taglia}}</td>
+                <!--  <td>{{moneypay.movimento}}</td>
+                  <td>{{moneypay.d_taglia}}</td> -->
+
+
+                <td [style.visibility]="cassa.qtaInc == 0 ? 'hidden' : null">{{cassa.qtaInc}}</td>
+                <td [style.visibility]="cassa.valoreInc == 0 ? 'hidden' : null">{{cassa.valoreInc}}</td>
+                <td [style.visibility]="cassa.qtaRes == 0 ? 'hidden' : null">{{cassa.qtaRes}}</td>
+                <td [style.visibility]="cassa.valoreRes == 0 ? 'hidden' : null">{{cassa.valoreRes}}</td>
+
+
+<!--
+                  <td [style.visibility]="moneypay.nro_pezzi_entrata == 0 ? 'hidden' : null">{{moneypay.nro_pezzi_entrata}}</td>
+                  <td hidden *ngIf="(moneypay.imp_entrata == 0)">{{moneypay.imp_entrata}}</td>
+                  <td hidden *ngIf="(moneypay.nro_pezzi_uscita == 0)">{{moneypay.nro_pezzi_uscita}}</td>
+                  <td hidden *ngIf="(moneypay.imp_uscita == 0)">{{moneypay. imp_uscita}}</td>  -->
+                </tr>
+                </table>
+
+            </div>
+             <!-- sesta parte parte del form - cassiere  -->
+
+                <div class="row ">
+                  <div class="col col-md-8">
+                  </div>
+                  <div class="col col-md-4">
+
+                    <table>
+                      <tr>
+                        <td  style="text-align: center;">
+                          <label class="col-sm-1 col-form-label">Cassiere</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td  style="text-align: center;">
+                          {{cassiere}}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+               </div>
+               <br>
+
+ <!--   </form>    -->
+   </div>
+</div>
+
+<div class="row ">
+  <div class="col col-md-8">
+  </div>
+  <div class="col col-md-4">
+    <button class="btn btn-primary" (click)="stampa()" [useExistingCss]="true" printSectionId ="print-section" ngxPrint>Stampa</button>
+  </div>
+  </div>
+

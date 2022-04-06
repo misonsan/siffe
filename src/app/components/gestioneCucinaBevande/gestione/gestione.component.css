@@ -1,0 +1,37 @@
+.borde {
+  border: 3px solid red;
+}
+
+.widthqta {
+  width: 50px;
+  border: 3px solid blue;
+}
+
+.imagecenter {
+  display:block;
+  margin:0px auto;
+  text-align:center;
+}
+
+
+.marginBotton {
+  margin: 3px;
+
+}
+
+.nf {
+  color: red;
+  font-weight: bold;
+}
+.consegnare {
+  color: blue;
+  font-weight: bold;
+}
+.cucinare {
+  color: red;
+  font-weight: bold;
+}
+.consegnati {
+  color: violet;
+  font-weight: bold;
+}

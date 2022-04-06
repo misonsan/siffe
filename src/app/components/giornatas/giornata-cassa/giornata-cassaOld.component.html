@@ -1,0 +1,129 @@
+<p>giornata-cassa works!</p>
+
+<!--
+{{cassaw | json}}<br>{{title}}<br>{{giornata.statoCassa}}
+
+
+<div class="header_Apertura title_Edit" *ngIf="giornata.statoCassa === 0"  >
+</div>
+ <strong>{{title}}</strong>  merda
+ -->
+
+ <div class="container borde">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-sm-12">{{title}}</caption>
+  </div>
+  <div class="header_Apertura title_Edit" *ngIf="giornata.statoCassa === 0 || giornata.statoCassa === 1 && giornata.cassaInizio === giornata.cassaAttuale">
+      <strong>{{title}}</strong>
+  </div>
+  <div class="header_Chiusura title_Edit" *ngIf="giornata.statoCassa === 1 && giornata.cassaInizio !== giornata.cassaAttuale || giornata.statoCassa === 2">
+    <strong>{{title}}</strong>
+  </div>
+
+  <br>
+
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="cassaw.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="giornata.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+        <!-- parte testata  disabled -->
+
+
+
+    <!--     da personalizzare   -->
+
+<!-- dettaglio della cassa -->
+
+
+<div >
+  <div class="row  ">
+    <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white">
+      <tr>
+        <th>Pezzatura</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Cassa</th>
+        <th></th>
+      </tr>
+
+      <tr>
+        <th class="col-sm-1">prog</th>
+        <th>pezzatura</th>
+        <th class="col-sm-1" >Quantita</th>
+        <th>Valore</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr app-cassaw1  *ngFor ="let cassaw of cassew  | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+      [cassaw1-prog] = i+1
+      [cassaw1-data] = "cassaw"
+      (totaleIncassato) ="totaleIncassato($event)"
+      >
+
+    </tr>
+      <br>
+      <tr>
+          <td> <label> Totale</label></td>
+          <td> </td>
+          <td><input type="number" disabled [(ngModel)]="totaleCassa"  #i005="ngModel" class="form-control num totale"  name="totaleCassa" id="totaleCassa" min="0" max="10" step="0.25" value="0.00"></td>
+      </tr>
+    </table>
+
+ <!-- Bottoni funzionali -->
+    <div class="container ">
+        <div class="form-group form-footer">
+          <div class="row">
+            <div class="col-sm-3">
+              <button class="btn btn-primary  btn-md"  (click)="backToGiornata()">Back        <!--backToUsers()-->
+                    <fa-icon [icon]="faHandPointLeft"></fa-icon>
+              </button>
+            </div>
+            <div class="col-sm-3" [(ngModel)]="giornata.statoCassa" #statoCassa="ngModel" >  <!-- [hidden]="giornata.statoCassa == 1" -->
+                <button class="btn btn-secondary  btn-md"  (click)="resetForm()">Reset
+                      <fa-icon [icon]="faUndo"></fa-icon>
+                </button>
+            </div>
+            <div class="col-sm-3" [(ngModel)]="giornata.statoCassa" #statoCassa="ngModel"> <!--  [hidden]="giornata.statoCassa == 1"-->
+                <button [disabled]="fm.invalid"  class="btn btn-success btn-md" (click)="Salva()" data-toggle="modal" data-target="#cassaShowModal"> Salva    <!--   save()   salva -->
+                      <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+                  </button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+ </div>
+</div>
+
+
+
+    <!--  fine personaizzazione  -->
+
+          <br>
+      <!--   messaggio con esito operazione -->
+
+          <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+        <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p class="mb-0">{{Message1err}}</p>
+          </div>
+          <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+      <!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p class="mb-0"></p>
+          </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+

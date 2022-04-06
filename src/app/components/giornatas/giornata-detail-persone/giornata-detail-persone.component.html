@@ -1,0 +1,186 @@
+<p>giornata-detail-persone works!</p>
+
+<div class="container">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-sm-12">{{title}}</caption>
+  </div>
+  <div class="header_Edit title_Edit" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+
+      <strong>{{title}}</strong>
+
+  </div>
+  <!--
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    functionEdit: {{functionEdit}}&nbsp;&nbsp;functionEdits: {{functionEdits}}
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>  -->
+
+
+  <br>
+
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="giornata.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="giornata.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+        <!-- parte testata  disabled -->
+
+        <div class="row">
+            <label for="descManif" class="col-sm-2 col-form-label">Manifestazione</label>
+            <div class=" col-md-6">
+              <input disabled #descManif="ngModel"  [(ngModel)]="manif.descManif" class="form-control" name="descManif" id="descManif">
+            </div>
+
+            <div class=" col-md-2">
+        <!--    <label for="descManif" class="col-sm-3 col-form-label">Stato</label><div class="col-sm-8">   -->
+              <div>
+                <input disabled #d_stato_manifestazione="ngModel"  [(ngModel)]="manif.d_stato_manifestazione" class="form-control" name="d_stato_manifestazione" id="d_stato_manifestazione" [style.color]="manif.stato == 2 ? 'red' : null">
+              </div>
+            </div>
+        </div>
+
+        <br>
+      <!--  riga date inizio e finei  -->
+        <div class="row">
+          <label for="dtInizio" class="col-sm-2 col-form-label">Data Inizio</label>
+          <div class=" col-md-2">
+            <input  disabled [(ngModel)]="manif.dtInizio" [ngModel]="manif.dtInizio | date:'dd/MM/yyyy'" #dtInizio="ngModel" class="form-control"  name="dtInizio" id="dtInizio" >
+          </div>
+          <label for="dtFine" class="col-sm-2 col-form-label">Data Fine</label>
+          <div class=" col-md-2">
+            <input disabled [(ngModel)]="manif.dtFine"  [ngModel]="manif.dtFine | date:'dd/MM/yyyy'" #dtFine="ngModel" class="form-control"  name="dtFine" id="dtFine"  >
+          </div>
+        </div>
+        <hr>
+
+
+        <div class="row">
+          <label for="dtGiornata" class="col-sm-2 col-form-label">Giornata</label>
+          <div class=" col-md-2">
+            <input readonly [(ngModel)]="giornata.dtGiornata"  [ngModel]="giornata.dtGiornata | date:'dd/MM/yyyy'" #dtGiornata="ngModel" class="form-control"  name="dtGiornata" id="dtGiornata"  >
+          </div>
+
+          <div class="col-md-2">
+            <div>
+              <input disabled #d_stato_giornata="ngModel"  [(ngModel)]="giornata.d_stato_giornata" class="form-control" name="d_stato_giornata" id="d_stato_giornata" [style.color]="giornata.stato == 2 ? 'red' : null">
+            </div>
+          </div>
+
+            <label for="d_stato_magazzino" class="col-sm-2 col-form-label">Stato Prodotti</label>
+            <div class=" col-md-2">
+              <input disabled #d_stato_cassa="ngModel"  [(ngModel)]="giornata.d_stato_magazzino" class="form-control" name="d_stato_magazzino" id="d_stato_magazzino" [style.color]="giornata.statoMagazzino === 0 ? 'red' : null">
+            </div>
+
+        </div>
+        <hr>
+
+    <!--     da personalizzare   -->
+
+    <div class="container-fluid">
+
+
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <table class="table">
+            <tr >
+              <td class="col-md-6">
+                <div class="form-check form-check-inline" *ngFor="let option of options; let idx = index">
+                  <input type="radio" name="radiogroup" [checked]="idx === 0" [value]="option" (change)="onSelectionChange(option)">&nbsp; {{option}}
+                  </div>
+              </td>
+              <td class="col-md-2">
+                <div class="dropdown">
+                  <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedRuo" ngModel name="ruolo" id="ruolo" class="form-select" required (change)="selectedRuolo($event.target.value)" aria-label="Default select example">
+                    <option selected value="999"  >Seleziona il Ruolo</option>
+                    <option *ngFor="let ruolo of truoliday" [value]="ruolo.id"  class="form-control"  >{{ruolo.d_ruolo_day}}</option>
+                  </select>
+                </div>
+              <!--
+              <td >
+                <label for="tipologia" class="col-sm-1 col-form-label">Tipologia</label>
+              </td>  -->
+
+              <td  class="col-md-2">
+                  <div *ngIf="trovatoRec" >
+                        <strong>Record :</strong>&nbsp;&nbsp; {{nRec}}
+                  </div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+          <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+            <tr>
+              <th>prog</th>
+              <th>Cognome</th>
+              <th>nome</th>
+              <th>Ruolo</th>
+              <!--  non serve action -->
+              <th>Action</th>
+              <th></th>
+              <th></th>
+            </tr>
+
+            <!-- [style.color]="prodotto.aMenu == '?' ? 'red' : null "  -->
+            <tr app-persona  *ngFor ="let persona of persone | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+              [persona-prog] = i+1
+              [persona-data] = "persona"
+              [persona-nrec] = nRec>
+            </tr>
+          </table>
+        </div>
+
+
+
+
+<!-- Bottoni funzionali -->
+<div class="container col-md-12 offset-3">
+    <div class="form-group form-footer">
+      <div class="row">
+        <div class="col-sm-3">
+          <button class="btn btn-primary  btn-md"  (click)="backToGiornata()">Back        <!--backToUsers()-->
+                <fa-icon [icon]="faHandPointLeft"></fa-icon>
+          </button>
+        </div>
+        <div class="col-sm-3">
+            <button [disabled]="nrecpersSelect !== 0" class="btn-md btn btn-info float-right"  (click)="rilasciaPersone()">Rilascia
+              <fa-icon [icon]="faHandPointLeft"></fa-icon>
+            </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+    <!--  fine personaizzazione  -->
+
+          <br>
+      <!--   messaggio con esito operazione -->
+
+          <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+        <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p hidden class="mb-0" *ngIf="nRec === 0">{{Message1err}}</p>
+          </div>
+          <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+      <!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p class="mb-0"></p>
+          </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+

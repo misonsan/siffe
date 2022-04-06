@@ -1,0 +1,114 @@
+<p>fornitori works!</p>
+
+
+<div class="container-fluid">
+  <div class="col-sm-12">
+    <strong>{{title}}</strong>
+  </div>
+
+  <br>
+  <div class="row justify-content-md-center">    <!--  <div class="row justify-content-md-center">  -->
+    <form #fm ="ngForm">
+
+      <div class="form-row">
+        <div class="row col-sm-6">
+          <div class="col-sm-6">
+               <button  class="btn btn-primary btn-rounded"  (click)="Nuovo()">Registrazione
+                 <fa-icon [icon]="faPlusSquare"  fixed="true"></fa-icon>
+                </button>
+           </div>
+        </div>
+      </div>
+      <br>
+
+
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="form-group row">
+          <div class="col-sm-3" >
+            <div class="form-check form-check-inline" *ngFor="let option of options; let idx = index">
+              <input type="radio" name="radiogroup" [value]="option" (change)="onSelectionChange(option)">&nbsp; {{option}}
+            </div>
+          </div>
+
+          <div class="col-md-3 "  *ngIf="enabledSelect === true" >
+            <div class="dropdown">
+              <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedSettore" ngModel name="settore" id="settore" class="form-select" required (change)="onSelectedSettore($event.target.value)" aria-label="Default select example">
+                <option selected value="999"  >Seleziona il Settore</option>
+                <option *ngFor="let settore of settori" [value]="settore.id"  class="form-control"  >{{settore.d_settore}}</option>
+              </select>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+
+        <div class="form-group row" >
+          <div class="col-sm-1">
+            <div class="alignicon">
+              <fa-icon [icon]="faSearch"  fixed="true"></fa-icon>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="search-hero">
+              <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="inserisci campo di ricerca">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div *ngIf="trovatoRec" >
+              <strong>Record :</strong>&nbsp;&nbsp; {{nRec}}
+            </div>
+          </div>
+
+    </div>
+    </div>
+    <br>
+     <form #fm ="ngForm">
+
+     <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+       <tr >
+           <th>prog</th>
+           <th>Ragione  Soc</th>
+           <th>Località</th>
+           <th>Settore</th>
+           <th>Telefono</th>
+           <th>Email</th>
+           <th>Importo</th>
+           <!--  non serve action -->
+           <th>Action</th>
+           <th></th>
+        </tr>
+
+       <tr app-fornitore  *ngFor ="let fornitore of fornitori | filter:searchText | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+          [fornitore-prog] = i+1
+          [fornitore-data] = "fornitore"
+          [functionUser] = functionUser
+          (onSelectFornitore) ="onSelectFornitore($event)"
+          (onDeleteFornitore) ="onDeleteFornitore($event)"
+       >
+
+
+     </tr>
+     </table>
+
+     <div class="row col-md-12">
+      <!-- messaggi -->
+      <div *ngIf="!alertSuccess && isVisible" class="alert alert-danger" role="alert">
+        <!--   <h4 class="alert-heading">Errore in elenco</h4>    -->
+           <p>{{Message}}</p>
+           <hr>
+         </div>
+         <div *ngIf="alertSuccess && isVisible" class="alert alert-success" role="alert">
+         <!--   <h4 class="alert-heading">Modifca Password</h4>    -->
+           <p>{{Message}}</p>
+         </div>
+        </div>
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+     </form>

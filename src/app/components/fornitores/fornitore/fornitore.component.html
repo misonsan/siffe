@@ -1,0 +1,68 @@
+
+<td >{{i}}</td>     <!-- <td >{{i}}</td>   -->
+  <td>{{fornitore.ragsociale}}</td>
+  <td>{{fornitore.localita}}</td>
+  <td>{{fornitore.d_settore}}</td>
+  <td>{{fornitore.telefono}}</td>
+  <td>{{fornitore.email}}</td>
+  <td>{{fornitore.importo | currency:'EUR'}}</td>
+  <!--   volendo impostare molte proprietà
+  <td [style.color]="getColor(fornitore.aMenu)"
+      [style.background-color]="getbackgroundColor(fornitore.aMenu)">{{fornitore.aMenu}} </td>
+      -->
+      <td class="buttons">
+        <div class="row">
+            <div class="col-sm-2">
+            <!-- (click)="showDetail()" modalità con soluzione 1 quando passavo al componente di dettaglio -->
+              <button   class="btn btn-danger  btn-sm" (click)="open(content)"  >
+                <fa-icon [icon]="faTrash" fixed="true"></fa-icon>
+
+          <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+              </button>
+            </div>
+              &nbsp;
+            <div class="col-sm-2">
+              <button   class="btn btn-primary  btn-sm" (click)="showFornitoreDetail(functionUser)"  >
+                    <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+                <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+               </button>
+
+            </div>
+            &nbsp;
+            <div class="col-sm-2">
+              <button   class="btn btn-success  btn-sm" (click)="registraSpesa()"  >
+                    <fa-icon [icon]="faEuroSign" fixed="true"></fa-icon>
+                <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+               </button>
+
+            </div>
+        </div>
+      </td>
+
+    <!--- popup per Cancellazione -->
+    <ng-template #content let-modal>
+      <div class="modal-header modal-header-color">
+        <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione Fornitore</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <p>confermi la cancellazione del Fornitore &nbsp;&nbsp;</p>
+          <p></p>
+          <p><strong>{{fornitore.ragsociale}}</strong>&nbsp;?</p>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+
+        <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+          <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+
+

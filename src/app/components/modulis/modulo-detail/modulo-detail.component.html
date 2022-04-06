@@ -1,0 +1,187 @@
+
+<!--
+<p>modulo-detail works!</p>
+
+
+{{modul | json}}   -->
+
+
+inqu &nbsp;&nbsp; {{functionNew}}<br>
+edit &nbsp;&nbsp; {{functionEdit}}<br>
+edits &nbsp;&nbsp; {{functionEdit}}
+
+<div class="container borde">
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-md-12 ">{{title}}</caption>
+  </div>
+
+  <br>
+
+
+  <div >    <!--  <div class="row justify-content-md-center">                 class="row col-md-12 marginGmForm" -->
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="modul.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="modul.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+
+
+        <!-- visualizzazione Inqu    [hidden]="!functionInqu" -->
+        <br>
+        <div >
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="modulo">Modulo</label>
+              <input style="text-transform: capitalize;" #modulo="ngModel"  [(ngModel)]="modul.modulo" class="form-control" name="modulo" id="modulo" required minlength="3" maxlength="40" pattern="[0-9a-zA-Z\s]*" placeholder="Inserire Modulo">
+              <div *ngIf="modulo.dirty && modulo.touched && modulo.invalid" class="alert alert-danger">
+                <!-- {{ demessa.errors | json }}  per editare gli errori e poi impostare il validatore corretto -->
+              <!--  validatore lato client -->
+                    <div  *ngIf="modulo.errors.required">    <!-- *ngIf="demessa.invalid"-->
+                      il campo modulo è obbligatorio
+                    </div>
+                    <div  *ngIf="modulo.errors.minlength">
+                      il campo deve essere lungo più di {{ modulo.errors.minlength.requiredLength }} caratteri
+                    </div>
+                    <div  *ngIf="modulo.errors.maxlength">
+                      il campo non deve essere lungo più di {{ modulo.errors.maxlength.requiredLength }} caratteri
+                    </div>
+                    <div *ngIf="modulo.errors?.pattern">
+                          inserire il formalismo corretto
+                    </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="route">Rotta</label>
+              <input style="text-transform: lowercase;"  #route="ngModel"  [(ngModel)]="modul.route" class="form-control" name="route" id="route" required minlength="3" maxlength="40" pattern="[0-9a-zA-Z\s]*" placeholder="Inserire rotta">
+              <div *ngIf="route.invalid && (route.dirty || route.touched)" class="alert alert-danger">
+                          <!--  validatore lato client -->
+                    <div  *ngIf="route.errors.required">    <!-- *ngIf="demessa.invalid"-->
+                      il campo Rotta è obbligatorio
+                    </div>
+                    <div  *ngIf="route.errors.minlength">
+                      il campo deve essere lungo più di {{ route.errors.minlength.requiredLength }} caratteri
+                    </div>
+                    <div  *ngIf="route.errors.maxlength">
+                      il campo non deve essere lungo più di {{ route.errors.maxlength.requiredLength }} caratteri
+                    </div>
+                    <div *ngIf="route.errors?.pattern">
+                          inserire il formalismo corretto
+                    </div>
+              </div>
+            </div>
+          </div>
+
+          <br>
+
+
+
+
+        </div>
+
+        <br>
+
+
+<!-- Bottoni funzionali -->
+  <!--      N = {{functionNew}}   E = {{functionEdit}}   S = {{functionEdits}}  I = {{functionInqu}}  -->
+          <div class="footer" >
+
+
+            <div class="row col-sm-10 offset-2">
+
+              <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-success btn-md " (click)="conferma()">Conferma
+                  <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-primary btn-md " (click)="reset()">Reset
+                  <fa-icon [icon]="faTimes"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3"  *ngIf="this.functionUser === this.navigateEdits">
+                <button [disabled]="fm.invalid " class="btn btn-danger btn-md "  (click)="open(content)"> Cancella
+                  <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3" >
+                <button  class="btn btn-info btn-md "  (click)="goback()"> Ritorna
+                  <fa-icon [icon]="faReply"  fixed="true"></fa-icon>
+                </button>
+              </div>
+          </div>
+
+
+
+
+
+
+
+          </div>
+
+
+
+
+
+      <br>
+
+<!--   messaggio con esito operazione -->
+
+        <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+     <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+          <p>{{Message}}</p>
+          <hr>
+          <p class="mb-0">{{Message1err}}</p>
+        </div>
+        <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+   <!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+          <p>{{Message}}</p>
+          <hr>
+          <p class="mb-0"></p>
+        </div>
+
+
+    </form>
+    </div>
+  </div>
+
+</div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header modal-header-color">
+    <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <p>confermi la cancellazione del Modulo &nbsp;&nbsp;</p>
+      <p></p>
+      <p><strong>{{modul.modulo}}&nbsp;</strong>&nbsp;?</p>
+      <!--   esempio di calendario che funziona benissimo
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+      -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+
+    <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+      <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,19 @@
+
+<td>{{i}}</td>
+<td>{{persona1.cognome}}</td>
+<td>{{persona1.nome}}</td>
+<td [style.color]="getColor(persona1.idRuolo_Day)" [style.background-color]="getBbackgroundColor(persona1.idRuolo_Day)"><strong>{{persona1.d_ruolo_day}}</strong></td>
+
+<td class="buttons">
+  <div class="row">
+    <div class="col-sm-4">
+              <button   class="btn btn-primary  btn-sm" (click)="selectedPersona()">
+                <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+
+     <!-- <button   class="btn btn-primary  btn-sm" (click)="showMessaDetail()"> -->
+       <!--  <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>  -->
+          <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+      </button>
+    </div>
+  </div>
+</td>

@@ -1,0 +1,9 @@
+<td>{{ttaglia.d_taglia}}</td>
+<td *ngIf="cassac.qtaInc > 0">{{cassac.qtaInc}}</td>
+<td *ngIf="cassac.qtaInc > 0">{{cassac.qtaInc  * ttaglia.valore_taglia}}</td>
+<td *ngIf="cassac.qtaInc > 0" [style.color]="getColor(entrata)">{{entrata}}</td>
+<td *ngIf="cassac.qtaRes > 0">{{cassac.qtaRes}}</td>
+<td *ngIf="cassac.qtaRes > 0">{{cassac.qtaRes * ttaglia.valore_taglia}}</td>
+<td *ngIf="cassac.qtaRes > 0" [style.color]="getColor(resto)">{{resto}}</td>
+
+

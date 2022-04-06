@@ -1,0 +1,12 @@
+.borde {
+  border: 3px solid red;
+}
+.errbtn {
+  color:red;
+  font-weight: bold;
+}
+.form-control:focus {
+  border-color: #6265e4 !important;
+  box-shadow: 0 0 5px rgba(98, 101, 228, 1) !important;
+  background-color: aquamarine;
+}

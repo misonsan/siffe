@@ -1,0 +1,200 @@
+
+<nav class="navbar  navbar-expand-lg navbar-light justify-content-between bg-primary">
+  <div class="container-fluid d-flex flex-wrap">
+  <ul id="menu">
+    <a  href="#">
+      <img src="assets/images/logoSanfra.png" width="30" height="30" alt="logo">
+    </a>
+    <li>
+      <div class="titolo nav-link">
+      {{titolo}}&nbsp;{{anno}}
+      </div>
+
+    </li>
+    <li><a href="#">Home</a>
+      <ul>
+        <li><a  class="nav-link" [routerLink]="['home']" href="#">Info</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </li>
+<!-- funzioni visibili solo da supervisore -->
+    <li><a class="nav-link" *ngIf="isUserLoggedIn " routerLink="profile" >Funzioni</a>
+      <ul>
+        <li><a *ngIf="isUserLoggedIn  && funcEnabled" href="#">Manifestazioni</a>
+          <ul>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" [routerLink]="['/manif/new']">Nuova</a></li>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" [routerLink]="['/manif']">Elenco Manifestazioni</a></li>
+          </ul>
+        </li>
+        <li><a *ngIf="isUserLoggedIn && funcEnabled" href="#">Prodotti</a>
+          <ul>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" [routerLink]="['/manif']">Nuovo</a></li>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" [routerLink]="['/manif']">Elenco Prodotti</a></li>
+          </ul>
+        </li>
+        <li><a *ngIf="isUserLoggedIn && funcEnabled" href="#">Commande</a>
+          <ul>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" (click)="goActivity(ruoloCassa)">Nuovo</a></li>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" [routerLink]="['/commande']">Elenco Commande</a></li>
+          </ul>
+        </li>
+        <li><a *ngIf="isUserLoggedIn && funcEnabled" href="#">Prenotazioni</a>
+          <ul>
+            <li><a   class="nav-link" [routerLink]="['info/infoprenotazione']" href="#">Info</a></li>
+            <!-- se non aperta Sanfra va inviato popup di avviso -->
+
+            <li><a  *ngIf="!manifActive"   class="nav-link" [routerLink]="['/notopenSanfra']" href="#">Prenotazione</a></li>
+
+            <li><a  *ngIf="manifActive" class="nav-link" [routerLink]="['/reqPrenotazione']" href="#">Prenotazione</a></li>
+            <li><a  *ngIf="manifActive" class="nav-link" href="#"  [routerLink]="['/prenotazioni']">Elenco Prenotazioni</a></li>
+          </ul>
+        </li>
+        <li><a *ngIf="isUserLoggedIn && funcEnabled" href="#">Users</a>
+          <ul>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" [routerLink]="['/users']">Elenco Users</a></li>
+          </ul>
+        </li>
+        <li><a *ngIf="isUserLoggedIn && funcEnabled" href="#">Tabelle</a>
+          <ul>
+            <li><a *ngIf="isUserLoggedIn"   class="nav-link" href="#" [routerLink]="['/tabellat']">Elenco tabelle</a></li>
+          </ul>
+        </li>
+     </ul>
+    </li>
+
+    <li>
+      {{isUserLoggedIn}} &nbsp; {{userAnonimus}} &nbsp; {{manifActive}}
+      <a *ngIf="!isUserLoggedIn && manifActive || isUserLoggedIn && userAnonimus && manifActive" href="#">Prenotazioni</a>
+      <ul>
+        <li><a   class="nav-link" [routerLink]="['info/infoprenotazione']" href="#">Info</a></li>
+        <li><a  *ngIf="!manifActive"   class="nav-link" [routerLink]="['/notopenSanfra']" href="#">Prenotazione</a></li>
+        <li><a  *ngIf="manifActive" class="nav-link" [routerLink]="['/reqPrenotazione']" href="#">Prenotazione</a></li>
+        <li><a *ngIf="isUserLoggedIn && userAnonimus"  class="nav-link" href="#"  [routerLink]="['/prenotazioni']">Elenco Prenotazioni</a></li>
+      </ul>
+    </li>
+
+
+
+    <li>
+        <div  *ngIf="isUserLoggedIn" >   <!-- mettere anche se giornata attiva -->
+            <button visible *ngIf="ruoloUser == 1 || ruoloUser == -1" class="btn btn-success btn-md pad" (click)="goActivity(ruoloCassa)">Cassa</button>
+        </div>
+    </li>
+    <li>
+        <div *ngIf="isUserLoggedIn">
+            <button  visible *ngIf="ruoloUser == 2  || ruoloUser == -1" class="btn btn-danger btn-md pad"  (click)="goActivity(ruoloCucina)">Cucina</button>
+        </div>
+    </li>
+    <li>
+        <div *ngIf="isUserLoggedIn" >
+            <button  visible *ngIf="ruoloUser == 3 || ruoloUser == -1" class="btn btn-primary btn-md pad"  (click)="goActivity(ruoloBevande)">Bevande</button>
+        </div>
+    </li>
+
+
+    <li>
+        <div class="titoliblue" *ngIf="isUserLoggedIn">
+          {{cognome}}
+        </div>
+
+    </li>
+
+   <!-- <li> <a  *ngIf="isUserLoggedIn" class="nav-link" href="#" (click)="logout($event)">Logout</a></li>   -->
+
+
+
+
+<!--
+    <li class="nav-item text-nowrap">
+      <a *ngIf="!isUserLoggedIn" (click)="signIn($event)"  class="nav-link titoliwhite" href="#">Login</a>
+    </li>
+
+    <li class="nav-item text-nowrap">
+      <a *ngIf="!isUserLoggedIn" (click)="signUp($event)"  class="nav-link titoliwhite" href="#">Registrazione</a>
+    </li>  -->
+    <li>
+        <a *ngIf="isUserLoggedIn" class="nav-item nav-link nameUser">{{username}}</a>
+    </li>
+    <!--
+    <li class="nav-item text-nowrap">
+          <a *ngIf="isUserLoggedIn" class="nav-link titoliwhite"  href="#" (click)=logout($event)>Sign out</a>
+    </li>  -->
+    <li hidden *ngIf="isUserLoggedIn" class="nav-item nav-link ">  <!--  -->
+      {{ruoloUser}}
+    </li>
+    <li   *ngIf="isUserLoggedIn" class="nav-item nav-link ">   <!-- hidden -->
+      {{idDay}}
+    </li>
+    <li   *ngIf="isUserLoggedIn" class="nav-item nav-link titoliwhite">   <!-- hidden -->
+      {{profilo}}
+    </li>
+    <li>
+      <!-- nav-link d-flex align-items-center justify-content-center icon-cart p-0-->
+    <div *ngIf="!isUserLoggedIn">
+      <a   href="#" class="nav-link dropdown-toggle align-items-center justify-content-center" id="dropdown04" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-user" ></i>
+        <fa-icon [icon]="faUser" fixed="true" class="iconUser"></fa-icon>
+        <b class="caret"></b>
+      </a>
+      <div class="dropdown-menu dropdown-menu-left  dropdown_Moreno" aria-labelledby="dropdown04">
+
+        <a (click)="signIn($event)"  class="menu-link dropdown-item titoliwhite" href="#">Login</a>  <!-- nav-link titoliwhite-->
+        <div class="dropdown-divider"></div>
+        <a (click)="signUp($event)"  class="menu-link dropdown-item" href="#">Registrazione</a>
+        <div class="dropdown-divider"></div>
+        <a routerLink="/forgotpassword" class="menu-link dropdown-item" href="#">Password dimenticata</a>
+        <div class="dropdown-divider"></div>
+        <a routerLink="/changePassword" class="menu-link dropdown-item" href="#">cambio Password</a>
+
+
+
+
+      <!--
+        <a href="#" class="dropdown-item">Action</a>
+        <a href="#" class="dropdown-item">Another action</a>
+        <a href="#" class="dropdown-item">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">Separated link</a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">One more separated link</a>  -->
+      </div>
+    </div>
+
+    <div *ngIf="isUserLoggedIn">
+      <a   href="#" class="nav-link dropdown-toggle align-items-center justify-content-center" id="dropdown05" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-user" ></i>
+        <fa-icon [icon]="faUserCheck" fixed="true" class="iconUserCheck"></fa-icon>
+        <b class="caret"></b>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right dropdown_Moreno" aria-labelledby="dropdown05">
+        <a class="dropdown-item" href="#" (click)="logout($event)">Logout &nbsp;<div class="titoliblue">{{username}}</div></a>
+        <div class="dropdown-divider"></div>
+        <a routerLink="/forgotpassword" class="dropdown-item " href="#">Password dimenticata</a>
+        <div class="dropdown-divider"></div>
+        <a routerLink="/changePassword" class="dropdown-item" href="#">cambio Password</a>
+
+<!--
+        <a href="#" class="dropdown-item">Action 1</a>
+        <a href="#" class="dropdown-item">Another action 1</a>
+        <a href="#" class="dropdown-item">Something else here 1</a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">Separated link</a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">One more separated link 1</a>  -->
+      </div>
+    </div>
+
+
+
+
+  </li>
+
+
+
+  </ul>
+</div>
+</nav>
+
+
+
+

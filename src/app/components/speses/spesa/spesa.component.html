@@ -1,0 +1,56 @@
+<td >{{i}}</td>     <!-- <td >{{i}}</td>   -->
+  <td>{{spesa.d_stato_spesa}}</td>  <!--  -->
+  <td>{{spesa.documento}}</td>
+  <td>{{spesa.motivo}}</td>
+   <td>{{spesa.importo | currency:'EUR'}}</td>
+   <!--   volendo impostare molte proprietà
+  <td [style.color]="getColor(prodotto.aMenu)"
+      [style.background-color]="getbackgroundColor(prodotto.aMenu)">{{prodotto.aMenu}} </td>
+      -->
+<td class="buttons">
+  <div class="row">
+      <div class="col-sm-2">
+      <!-- (click)="showDetail()" modalità con soluzione 1 quando passavo al componente di dettaglio -->
+        <button   class="btn btn-danger  btn-sm" (click)="open(content)"  >
+          <fa-icon [icon]="faTrash" fixed="true"></fa-icon>
+
+    <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+        </button>
+      </div>
+        &nbsp;&nbsp;&nbsp;
+      <div class="col-sm-2">
+        <button   class="btn btn-primary  btn-sm" (click)="showSpesaDetail(functionUser)"  >
+              <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+          <!--  <fa name="fainfo" fixed="true" ></fa>  -->
+         </button>
+
+      </div>
+  </div>
+</td>
+
+<!--- popup per Cancellazione -->
+<ng-template #content let-modal>
+<div class="modal-header modal-header-color">
+  <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione Spesa</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <p>confermi la cancellazione della Spesa &nbsp;&nbsp;</p>
+    <p></p>
+    <p><strong>{{spesa.documento}}</strong>&nbsp; per importo di {{spesa.importo}}&nbsp;?</p>
+
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+
+  <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+    <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+  </button>
+</div>
+</ng-template>
+

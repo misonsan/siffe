@@ -1,0 +1,19 @@
+.lung1 {
+  width: 20px;
+  border: 3px solid red;
+}
+.lung2 {
+  width: 50px;
+  border: 3px solid blue;
+}
+.lungt {
+  width: 1000px;
+  border: 3px solid violet;
+}
+.totale {
+  text-align:right;
+  background-color: aqua;
+  color: red;
+  border-radius: 10px;
+  font-weight: bold;
+}

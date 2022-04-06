@@ -1,0 +1,17 @@
+<!--<td>{{i}}</td> -->
+<td>{{taglia.d_taglia}}</td>
+<!-- [style.color]="cassawc.qtaRes !== 0 ? 'yellow' : null" [style.bgcolor]="cassawc.qtaRes !== 0 ? 'black' : null" -->
+<td  class="col-md-1"><input [style.color]="cassawc.qtaRes == 0 ? null : 'red'" [style.bgcolor]="cassawc.qtaRes == 0 ?  null : 'black'" class="form-control col-md-1" type="number" name="titleIncasso" [(ngModel)]="cassawc.qtaRes" autocomplete="off" ></td>
+<td [style.color]="cassawc.qtaRes == 0 ? null : 'red'" [style.bgcolor]="cassawc.qtaRes == 0 ?  null : 'black'">{{cassawc.valoreRes}}</td>
+<td class="cassa">{{cassa.qtaAc}}</td>
+<td class="cassa">{{cassa.valoreAc}}</td>
+<td class="buttons">
+  <div class="row col-sm-12">
+    <div disabled class="col-sm-2">
+      <button class="btn btn-primary  btn-sm" (click)="resto(cassawc)"  type="button">
+       <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+      </button>
+    </div>
+
+  </div>
+</td>

@@ -1,0 +1,19 @@
+.ruoloSuper {
+  background-color: yellow;
+  border: 2px solid violet;
+  color: #2585e6;
+
+}
+
+.ruoloGuest {
+  background-color: #2585e6;
+  border: 2px solid green;
+  color: orange;
+
+}
+.ruoloOther {
+  background-color: red;
+  border: 2px solid blue;
+  color: yellow;
+
+}

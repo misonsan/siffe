@@ -1,0 +1,283 @@
+<p>commanda-registrazione-anagrafica works!</p>
+
+<!--{{giornata | json }} -->
+
+<div class="container">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-sm-12">{{title}}</caption>
+  </div>
+  <div class="header_Edit title_Edit col-md-5" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+    <input disabled class="form-control" type="text" name="title" [(ngModel)]="title" autocomplete="off" >
+     <!-- <strong>{{title}}</strong>  -->
+
+  </div>
+  <!--
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    functionEdit: {{functionEdit}}&nbsp;&nbsp;functionEdits: {{functionEdits}}
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>  -->
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="giornata.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="giornata.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+
+        <br>
+        <strong><label  class="col-form-label">Totali</label></strong>
+
+        <div class="row">
+          <label for="dtGiornata" class="col-sm-1 col-form-label">Giornata</label>
+          <div class="col-md-2 ">
+            <input readonly [(ngModel)]="giornata.dtGiornata"  [ngModel]="giornata.dtGiornata | date:'dd/MM/yyyy'" #dtGiornata="ngModel" class="form-control"  name="dtGiornata" id="dtGiornata"  >
+          </div>
+
+          <div class="col-md-1">
+            <div>
+              <input disabled #d_stato_giornata="ngModel"  [(ngModel)]="giornata.d_stato_giornata" class="form-control" name="d_stato_giornata" id="d_stato_giornata" [style.color]="giornata.stato == 2 ? 'red' : null">
+            </div>
+          </div>
+
+
+            <label for="Tnumero" class="col-md-1 col-form-label totali">Commande</label>
+            <div class=" col-md-1">
+                <input disabled class="form-control" type="text" name="Tnumero" [(ngModel)]="Tnumero" autocomplete="off" >
+            </div>
+            <label for="Tnumpersone" class="col-sm-1 col-form-label totali">Persone</label>
+            <div class=" col-md-1">
+                <input disabled class="form-control" type="text" name="Tnumpersone" [(ngModel)]="Tnumpersone" autocomplete="off" >
+            </div>
+             <label for="Tpagato" class="col-sm-1 col-form-label totali">Pagato</label>
+            <div class=" col-md-1">
+                <input disabled class="form-control" type="text" name="Tpagato" [(ngModel)]="Tpagato" autocomplete="off" >
+            </div>
+
+
+
+        </div>
+        <br>
+
+   <!-- bottone per registrazione -->
+   <div class="row">
+        <div class="row col-sm-2 ">
+          <button  class="btn btn-success btn-rounded"  (click)="elenco()">Elenco
+            <fa-icon [icon]="faSearch"  fixed="true"></fa-icon>
+          </button>
+        </div>&nbsp;&nbsp;
+        <div class="row col-sm-2 ">
+          <button  class="btn btn-primary btn-rounded"  (click)="NuovaCommanda(idlogged)">Registrazione
+            <fa-icon [icon]="faPlusSquare"  fixed="true"></fa-icon>
+          </button>
+        </div>
+   </div>
+
+<!--     moreno  -->
+
+   <br>
+
+   <div class="row">
+     <!--  Modalità di creazione radio button manuale
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="S" (change)="openSanfra(sanfra)">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Personale Sanfra
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked value="N" (change)="onSelectionChange('N')">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Cliente
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="N" (change)="visualizzaPrenotazioni()">
+          <label class="form-check-label" for="flexRadioDefault3">
+            Prenotazioni
+          </label>
+        </div> -->
+
+        <div class="col-sm-8">
+          <div class="form-check form-check-inline" *ngFor="let option of options; let idx = index">
+            <input type="radio" name="radiogroup" [checked]="idx === 0" [value]="option" (change)="onSelectionChange(option)">&nbsp; {{option}}
+          </div>
+        </div>
+   </div>
+   <br>
+
+
+
+
+<!--   cognome e nome -->
+
+
+<div class="form-group row">
+  <label for="anagrafica_cliente" class="col-sm-1 col-form-label">Cliente</label>
+  <div class="col-sm-6" >
+    <input  type="text":focus #anagrafica_cliente="ngModel"  [(ngModel)]="commandaw.anagrafica_cliente" class="form-control" name="anagrafica_cliente" id="anagrafica_cliente" required minlength="4" maxlength="50" pattern="[0-9a-zA-Z\s]*" placeholder="Inserire Cliente" >&nbsp;&nbsp; <label  *ngIf="activateNuovaCommanda === false" class="errbtn">{{testopressButton}}</label>
+  </div>
+
+  <br>
+   <div *ngIf="anagrafica_cliente.dirty && anagrafica_cliente.touched && anagrafica_cliente.invalid" class="alert alert-danger">
+   <!-- <div *ngIf="anagrafica_cliente.invalid && (anagrafica_cliente.dirty || anagrafica_cliente.touched)" class="alert-danger">  -->
+      <div *ngIf="anagrafica_cliente.errors.required">
+          <span>il nome del cliente è obbligatorio</span>
+      </div>
+      <div *ngIf="anagrafica_cliente.errors.minlength">
+         <span>il nome del cliente deve essere di almeno 4 caratteri</span>
+      </div>
+      <div *ngIf="anagrafica_cliente.errors.maxlength">
+          <span>il nome del cliente non può essere più lunga di 50 caratteri</span>
+       </div>
+    </div>
+  </div>
+
+<br>
+
+<div class="row">
+
+    <label for="numPersone" class="col-sm-1 col-form-label">Persone</label>
+    <div class="col-md-1">
+      <input type="text":focus #numPersone="ngModel"  [(ngModel)]="commandaw.numPersone" class="form-control" name="numPersone" id="numPersone" required pattern="[1-9]*" placeholder="Inserire Persone">
+    </div>
+    <br>
+    <div *ngIf="numPersone.invalid && (numPersone.dirty || numPersone.touched)" class="alert-danger">
+      <div *ngIf="numPersone.errors.required">
+          <span>il numero delle persone è obbligatorio</span>
+      </div>
+      <div *ngIf="numPersone.errors.pattern">
+         <span>inserire il numero delle persone</span>
+      </div>
+    </div>
+    <label for="numTavolo" class="col-sm-1 col-form-label">Tavolo</label>
+    <div class="col-sm-1">
+        <input type="text":focus #numTavolo="ngModel"  [(ngModel)]="commandaw.numTavolo" class="form-control" name="numTavolo" id="numTavolo" required pattern="[0-9]*" placeholder="Inserire Tavolo">
+    </div>
+    <br>
+    <div *ngIf="numTavolo.invalid && (numTavolo.dirty || numTavolo.touched)" class="alert-danger">
+       <div *ngIf="numTavolo.errors.required">
+          <span>il numero del tavolo è obbligatorio</span>
+      </div>
+      <div *ngIf="numTavolo.errors.pattern">
+         <span>inserire il numero del tavolo</span>
+      </div>
+     </div>
+
+</div>
+<hr>
+
+
+<br>
+<!--  fine moreno -->
+
+
+
+
+
+
+
+
+<!-- Bottoni funzionali -->
+<div class="container col-md-12 offset-3">
+    <div class="form-group form-footer">
+      <div class="row">
+        <div class="col-sm-3">
+          <button class="btn btn-primary  btn-md"  (click)="backToGiornata()">Back        <!--backToUsers()-->
+                <fa-icon [icon]="faHandPointLeft"></fa-icon>
+          </button>
+        </div>
+
+        <div class="col-sm-3">
+            <button [disabled]="fm.invalid" class="btn-md btn btn-info float-right"  (click)="registraProdotti()">Prodotti
+              <fa-icon [icon]="faHandPointLeft"></fa-icon>
+            </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+    <!--  fine personaizzazione  -->
+
+          <br>
+      <!--   messaggio con esito operazione -->
+
+          <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+        <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p hidden class="mb-0" *ngIf="nRec === 0">{{Message1err}}</p>
+          </div>
+          <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+      <!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+            <p>{{Message}}</p>
+            <hr>
+            <p class="mb-0"></p>
+          </div>
+
+          <div *ngIf="visiblePrenotazioni === true">
+
+
+            <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+              <tr>
+                <th>prog</th>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>Pers</th>
+                <th>telefono</th>
+                <th>email</th>
+                <th>Action</th>
+                <th></th>
+                <th></th>
+              </tr>
+
+              <!-- [style.color]="prodotto.aMenu == '?' ? 'red' : null "  -->
+              <tr app-prenotazione  *ngFor ="let prenotazione of prenotazioni | filter:searchText | paginate: { itemsPerPage: 10, currentPage: p_pren }; let i = index"
+                [prenotazione-prog] = i+1
+                [prenotazione-data] = "prenotazione"
+                (onSelectPrenotazione) ="onSelectPrenotazione($event)"
+                >
+
+
+              </tr>
+            </table>
+            <pagination-controls (pageChange)="p_pren = $event"></pagination-controls>
+
+          </div>
+
+     <div *ngIf="visibleSanfra === true">
+
+
+            <table class="table table-striped table-sm shadow-lg p-3 mb-5 bg-white ">
+
+              <tr>
+                <th>prog</th>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>Action</th>
+                <th></th>
+                <th></th>
+              </tr>
+
+              <!-- [style.color]="prodotto.aMenu == '?' ? 'red' : null "  -->
+              <tr app-persona1  *ngFor ="let persona1 of persone | filter:searchText | paginate: { itemsPerPage: 5, currentPage: p_pers }; let i = index"
+                [persona1-prog] = i+1
+                [persona1-data] = "persona1"
+                (onSelectPersona) ="onSelectPersona($event)"
+                >
+
+
+              </tr>
+            </table>
+            <pagination-controls (pageChange)="p_pren = $event"></pagination-controls>
+
+          </div>
+
+
+
+

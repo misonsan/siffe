@@ -1,0 +1,19 @@
+
+<td>{{i}}</td>
+<td>{{commanda.id}}</td>
+<td >{{commanda.anagrafica_cliente}}</td>  <!-- [style.color]="getColor(select)" -->
+<td>{{commanda.numPersone}}</td>
+<td>{{commanda.importodaPagare | number : '1.2-2'}}</td>
+<td>{{commanda.d_stato_commanda}}</td>
+
+<td>
+  <button   class="btn btn-primary  btn-sm" (click)="showDetailProdotti()">
+    <fa-icon [icon]="faAlignLeft" fixed="true"></fa-icon>
+  </button>
+</td>
+<td>
+  <button   class="btn btn-success  btn-sm" (click)="showDetailCassa()">
+    <fa-icon [icon]="faEuroSign" fixed="true"></fa-icon>
+  </button>
+</td>
+

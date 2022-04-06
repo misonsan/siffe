@@ -1,0 +1,16 @@
+<td>{{i}}</td>
+<td class="col-md-2">{{taglia.d_taglia}}</td>
+<td  [style.color]="getColor(cassaw.qtaInc)" [style.backgroundColor]="getbackgroundColor(cassaw.qtaInc)"><input class="form-control col-md-1" type="text" name="titleIncasso" [(ngModel)]="cassaw.qtaInc" autocomplete="off" ></td>
+<td  [style.color]="getColor(cassaw.qtaInc)" [style.backgroundColor]="getbackgroundColor(cassaw.qtaInc)"><strong>{{cassaw.valoreInc}}</strong></td>
+
+<td class="buttons">
+  <div class="row col-sm-12">
+    <div class="col-sm-2">
+      <button class="btn btn-success  btn-sm" (click)="inserisci(cassaw)"  type="button">
+       <fa-icon [icon]="faUserEdit" fixed="true"></fa-icon>
+      </button>
+    </div>
+
+  </div>
+</td>
+

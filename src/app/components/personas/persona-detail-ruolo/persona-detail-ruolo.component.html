@@ -1,0 +1,140 @@
+<p>persona-detail-ruolo works!</p>
+
+<!--{{persona | json }}<br>{{giornata | json }}<br> -->
+
+<div class="container borde">
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-sm-12">{{title}}</caption>
+  </div>
+  <div class="header_Edit title_Edit" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+       <strong>{{title}}</strong>
+  </div>
+
+</div>
+
+<br>
+<div >
+<div class="col-md-auto">
+<form #fm ="ngForm"  method="POST">
+  <input hidden #id="ngModel"  [(ngModel)]="giornata.id" class="form-control" name="id" id="id">
+  <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="giornata.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+  <input hidden #idPersona="ngModel"  [(ngModel)]="persona.id" class="form-control" name="idPersona" id="idPersona">
+  <!-- Giornata -->
+      <div class="row">
+        <label for="dtGiornata" class="col-sm-1 col-form-label">Data</label>
+        <div class=" col-md-2">
+          <input  disabled    class="form-control" #dtGiornata="ngModel"  [(ngModel)]="giornata.dtGiornata"  name="dtGiornata" id="dtGiornata"  [ngModel]="giornata.dtGiornata | date:'dd/MM/yyyy'" >
+
+        </div>
+        <label for="d_stato_giornata" class="col-sm-1 col-form-label">Stato</label>
+          <div class=" col-md-2">
+            <input  disabled    class="form-control" #d_stato_giornata="ngModel"  [(ngModel)]="giornata.d_stato_giornata" name="d_stato_giornata" id="d_stato_giornata"  [style.color]="giornata.stato == 2 ? 'red' : null">
+          </div>
+        <label for="d_stato_giornata" class="col-sm-2 col-form-label">Stato Persona</label>
+        <div class=" col-md-2">
+          <input  disabled    class="form-control" #d_stato_magazzino="ngModel"  [(ngModel)]="giornata.d_stato_magazzino" name="d_stato_magazzino" id="d_stato_magazzino"  [style.color]="giornata.statoMagazzino == 0 ? 'red' : null">
+        </div>
+      </div>
+      <br>
+      <!-- photo -->
+      <div class="col-6 " style="margin-top: 35px;">
+          <div class="row">
+            <div class="col-md-12 offset-6">
+              <img src="assets/images/photoProducts/{{persona.photo}}"  alt="persona.photo" class="img-circle rounded-circle border p-1 img" width="150px" height="150px">
+           </div>
+          </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <label for="cognome" class="col-sm-1 col-form-label">Cognome</label>
+        <div class=" col-md-6">
+          <input required  disabled type="text" #cognome="ngModel"  [(ngModel)]="persona.cognome" class="form-control"  name="cognome" id="cognome"/>
+        </div>
+        <label for="nome" class="col-sm-1 col-form-label">Nome</label>
+        <div class=" col-md-2">
+          <input  disabled    class="form-control" #nome="ngModel"  [(ngModel)]="persona.nome"  name="nome" id="nome" >
+        </div>
+      </div>
+      <br>
+
+
+
+    <!--  ruolo attuale -->
+
+    <div class="row">
+             <label for="d_ruolo_day" class="col-sm-2 col-form-label"><strong>Ruolo attuale</strong></label>
+             <div class=" col-md-6">
+              <input disabled type="text" #d_ruolo_day="ngModel"  [(ngModel)]="persona.d_ruolo_day" class="form-control"  name="d_ruolo_day" id="d_ruolo_day"  [style.color]="persona.idRuolo_Day == 0 ? 'red' : null"/>
+            </div>
+
+    </div>
+    <br>
+
+
+    <!--    ruoli -->
+
+      <div class="form-group was-validated col-md-6">
+        <label class="col-sm-2 control-label ">Ruolo</label>
+        <select class="custom-select" required (change)="selectedRuolo($event.target.value)">
+          <option value="999">Selezione il ruolo</option>
+          <option *ngFor="let ruolo of ruoliday" [value]="ruolo.id"  class="form-control" >{{ruolo.d_ruolo_day}}</option>
+        </select>
+        <div class="invalid-feedback">effettuare la scelta del ruolo operativo del giorno</div>
+      </div>
+
+      <hr>
+
+
+      <!-- Bottoni funzionali -->
+      <div class="container col-md-12 offset-3">
+        <div class="form-group form-footer">
+          <div class="row">
+            <div class="col-sm-3">
+              <button class="btn btn-primary  btn-md"  (click)="backToPersone()">Back
+                    <fa-icon [icon]="faHandPointLeft"></fa-icon>
+              </button>
+            </div>
+            <div class="col-sm-3">
+                <button [disabled]="persona.idRuolo_Day === 0" class="btn-md btn btn-info float-right"  (click)="Salva()">Salva
+                  <fa-icon [icon]="faSave"></fa-icon>
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row col-md-12">
+        <div *ngIf="!alertSuccess && isVisible" class="alert alert-danger" role="alert">
+          {{Message}}
+          <hr>
+        </div>
+        <div *ngIf="alertSuccess && isVisible" class="alert alert-success" role="alert">
+
+          <p>{{Message}}</p>
+        </div>
+     </div>
+
+</form>
+</div>
+</div>
+
+<!--     combo con  ruoli
+        <div class="row">
+          <label class="col-sm-3 control-label ">Selezionare se Prodotto a Menu</label>
+
+          <div class="col-md-2">
+            <select class="custom-select dropdown-toggle" required (change)="onSelectionChangeCombo($event.target.value)">
+              <option *ngFor="let prod of enabledProd" [value]="prod.value"  class="form-control" >{{prod.dEnable}}</option>
+            </select>
+          </div>
+          <div class="col-md-3" [style.color]="getColor(persona.aMenu)"  [style.background]="getColorbg(persona.aMenu)">
+            {{attuale}}
+
+          </div>
+
+
+      </div>  -->

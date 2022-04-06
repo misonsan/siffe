@@ -1,0 +1,416 @@
+<p>prodotto-detail works!</p>
+
+<div class="container">
+
+  <div class="header_Inqu" *ngIf="functionInqu">
+    <caption class="title_Inqu  col-md-12">{{title}}</caption>
+  </div>
+
+
+  <div class="header_Edit title_Edit" *ngIf="functionUser  ===  searchEdits   ||  functionUser  ===  searchEdit">
+
+      <strong>{{title}}</strong>
+
+  </div>
+  <!--
+  <div class="header_Edit" *ngIf="functionEdit || functionEdits">
+    functionEdit: {{functionEdit}}&nbsp;&nbsp;functionEdits: {{functionEdits}}
+    <caption class="title_Edit  col-md-12">{{title}}</caption>
+  </div>  -->
+
+
+  <div class="header_New" *ngIf="functionNew">
+    <caption class="title_New  col-md-12 ">{{title}}</caption>
+  </div>
+
+
+<br>
+
+
+  <div >
+    <div class="col-md-auto">
+      <form #fm ="ngForm"  method="POST">
+        <input hidden #id="ngModel"  [(ngModel)]="prodotto.id" class="form-control" name="id" id="id">
+        <input hidden #key_utenti_operation="ngModel"  [(ngModel)]="prodotto.key_utenti_operation" class="form-control" name="key_utenti_operation" id="key_utenti_operation">
+
+
+
+        <div class="form-row">
+          <div class="col-md-12 offset-6">
+            <img src="http://localhost:3000/upload/files/products/{{prodotto.photo}}"  alt="selezionare foto" class="img-circle rounded-circle border p-1 centro" width="150px" height="150px">  <!-- assets/images/users/{{user.photo}} -->
+          </div>
+    </div>
+    <br>
+
+    <!--  per upload files -->
+    <div class="row">
+      <div class="col-8">
+        <label class="btn btn-default p-0">
+          <input type="file" (change)="selectFile($event)" />
+        </label>
+      </div>
+
+      <div class="col-4">
+        <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+          Upload
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="currentFile" class="progress my-3">
+      <div
+        class="progress-bar progress-bar-info progress-bar-striped"
+        role="progressbar"
+        attr.aria-valuenow="{{ progress }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [ngStyle]="{ width: progress + '%' }"
+      >
+        {{ progress }}%
+      </div>
+    </div>
+
+    <div *ngIf="messageupload" class="alert alert-secondary" role="alert">{{ messageupload }}</div>
+<!--    lista dei files  -- non utilizzata in questa specifica situazione
+    <div class="card mt-3">
+      <div class="card-header">List of Files</div>
+      <ul
+        class="list-group list-group-flush"
+        *ngFor="let file of fileInfos | async"
+      >
+        <li class="list-group-item">
+          <a href="{{ file.url }}">{{ file.name }}</a>
+        </li>
+      </ul>
+    </div>    -->
+
+  <!--  per upload files ---------------------    fine  -->
+
+
+
+        <br>
+        <!-- Descrizione  -->
+         <div class="form-row">
+          <div class="mb-3 row margini">
+            <label for="descrizione" class="col-sm-2 col-form-label">Descrizione:</label>
+            <div class="col-sm-5">
+            <input type="text" #descrizione="ngModel"  [(ngModel)]="prodotto.descrizione" class="form-control" name="descrizione" id="descrizione" required minlength="4" maxlength="50" pattern="[0-9a-zA-Z/\s]*" placeholder="Inserire Descrizione">  <!-- [0-9a-zA-Z\s]* -->
+              <div *ngIf="descrizione.invalid && descrizione.dirty && descrizione.touched" class="alert-danger">
+                <div *ngIf="descrizione.errors.required">
+                    <span>la descrizione è obbligatoria</span>
+                </div>
+                <div *ngIf="descrizione.errors.minlength">
+                   <span>la descrizione deve essere di almeno 4 caratteri</span>
+                </div>
+                <div *ngIf="descrizione.errors.maxlength">
+                    <span>la descrizione non può essere più lunga di 50 caratteri</span>
+                 </div>
+              </div>
+            </div>
+          </div>
+         </div>
+<!-- stato -->
+
+<div class="row">
+
+  <div class="col-md-6 was-validated form-inline">
+
+    <div class="row">
+      <div class="col-md-2 ">Stato</div>
+      <div class="col-md-5">
+          <div class="dropdown">
+            <select class="btn btn-primary dropdown-toggle borde" type="button" data-toggle="dropdown" [(ngModel)]="selectedStato" ngModel name="stato" id="stato" class="form-select" required (change)="onSelectedStato($event.target.value)" aria-label="Default select example">
+              <option selected value=""  >Seleziona lo Stato</option>
+              <option *ngFor="let stato of stati" [value]="stato.id"  class="form-control"  >{{stato.d_stato_prodotto}}</option>
+            </select>
+          </div>
+          <div class="invalid-feedback">effettuare la scelta dello Stato</div>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-8 ">
+
+
+
+  </div>
+</div>
+<br>
+
+<div class="row">
+
+    <div class="col-md-4 was-validated form-inline">  <!--  form-group -->
+        <div class="row">
+            <div class="col-md-2">Tipologia</div>&nbsp;&nbsp;
+            <div class="col-md-8">
+              <select [(ngModel)]="selectedTipologia" ngModel name="tipologia" id="tipologia" class="btn btn-primary dropdown-toggle borde"  type="button" required class="form-select" (change)="onSelectedTipologia($event.target.value)">
+                <option value="">Seleziona la Tipologia</option>
+                <option *ngFor="let tipologia of tipologie" [value]="tipologia.id"  class="form-control"  >{{tipologia.d_tipologia}}</option>
+              </select>
+            </div>
+          <div class="invalid-feedback">effettuare la scelta della tipologia</div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4 was-validated form-inline">  <!--  form-group -->
+      <div class="row">
+          <div class="col-md-2">Categoria</div>&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="col-md-8 ">
+            <select [(ngModel)]="selectedCategoria" ngModel name="categoria" id="categoria" class="btn btn-primary dropdown-toggle borde"  type="button" class="form-select" required (change)="onSelectedCategoria($event.target.value)">
+              <option value="">Seleziona la Categoria</option>
+              <option *ngFor="let categoria of categorie" [value]="categoria.id"  class="form-control"  >{{categoria.d_categoria}}</option>
+          </select>
+          </div>
+        <div class="invalid-feedback">effettuare la scelta della tipologia</div>
+
+      </div>
+    </div>
+
+    <div class="col-md-4 was-validated form-inline">  <!--  form-group -->
+      <div class="row">
+          <div class="col-md-3">Competenza</div>&nbsp;
+          <div class="col-md-8">
+            <select [(ngModel)]="selectedCompetenza" ngModel name="competenza" id="competenza" class="btn btn-primary dropdown-toggle borde"  type="button" class="form-select" required (change)="onSlectedCompetenza($event.target.value)" >
+              <option value="">Seleziona la Competenza</option>
+              <option *ngFor="let competenza of competenze" [value]="competenza.id"  class="form-control"  >{{competenza.d_competenza}}</option>
+            </select>
+          </div>
+        <div class="invalid-feedback">effettuare la scelta della tipologia</div>
+
+      </div>
+    </div>
+</div>
+<br>
+<div class="row">
+
+    <div class="col-md-7">
+      <div class="form-group row">
+        <label for="prezzo" class="col-sm-2 col-form-label">Prezzo</label>
+        <div class="col-sm-5">
+          <input  type="text" required #prezzo="ngModel"  [(ngModel)]="prodotto.prezzo"  minlength="1" maxlength="3" pattern="[0-9]{1,3}" class="form-control col-md-2" name="prezzo" id="prezzo" placeholder="Inserire il prezzo">
+          <br>
+          <div *ngIf="prezzo.dirty && prezzo.touched && prezzo.invalid"  class="alert alert-danger">
+              <div  *ngIf="prezzo.errors.required">
+                inserire il prezzo - campo Obbligatorio
+              </div>
+              <div  *ngIf="prezzo.errors.minlength">
+                il campo deve avere almeno {{prezzo.errors.minlength.requiredLength }} caratteri
+              </div>
+
+              <div *ngIf="prezzo.errors?.pattern">
+                <!-- non posso inserire lettere   {{postimax.errors.pattern.requiredPattern }}  -->
+                prezzo non valido
+              </div>
+          </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="col-md-5">
+     <!-- deve restare vuoto -->
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-7">
+      <div class="form-group row">
+        <label for="disponibile" class="col-sm-2 col-form-label">Disponibile</label>
+        <div class="col-sm-5">
+          <input required #disponibile="ngModel"  [(ngModel)]="prodotto.disponibile"  minlength="1" maxlength="3" pattern="[0-9]{1,3}" class="form-control col-md-2" name="disponibile" id="disponibile" placeholder="Inserire la disponibilità">
+          <br>
+          <div *ngIf="disponibile.dirty && disponibile.touched && disponibile.invalid"  class="alert alert-danger">
+              <div  *ngIf="disponibile.errors.required">
+                inserire la disponibilità - campo Obbligatorio
+              </div>
+              <div  *ngIf="disponibile.errors.minlength">
+                il campo deve avere almeno {{disponibile.errors.minlength.requiredLength }} caratteri
+              </div>
+
+              <div *ngIf="disponibile.errors?.pattern">
+                <!-- non posso inserire lettere   {{postimax.errors.pattern.requiredPattern }}  -->
+                disponibilità non valida.
+              </div>
+          </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <label for="qta_vendute" class="col-sm-3 col-form-label">Qta Vendute</label>
+        <div class="col-sm-2">
+          <input disabled #qta_vendute="ngModel"  [(ngModel)]="prodotto.qta_vendute"  class="form-control col-md-2" name="qta_vendute" id="qta_vendute" >
+        </div>
+    </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-7">
+      <div class="form-group row">
+        <label for="scorta_minima" class="col-sm-2 col-form-label">scorta minima</label>
+        <div class="col-sm-5">
+          <input required #scorta_minima="ngModel"  [(ngModel)]="prodotto.scorta_minima"  minlength="1" maxlength="3" pattern="[0-9]{1,3}" class="form-control col-md-2" name="scorta_minima" id="scorta_minima" placeholder="Inserire la scorta minima">
+          <br>
+          <div *ngIf="scorta_minima.dirty && scorta_minima.touched && scorta_minima.invalid"  class="alert alert-danger">
+              <div  *ngIf="scorta_minima.errors.required">
+                inserire la scorta minima- campo Obbligatorio
+              </div>
+              <div  *ngIf="scorta_minima.errors.minlength">
+                il campo deve avere almeno {{scorta_minima.errors.minlength.requiredLength }} caratteri
+              </div>
+
+              <div *ngIf="scorta_minima.errors?.pattern">
+                <!-- non posso inserire lettere   {{postimax.errors.pattern.requiredPattern }}  -->
+                scorta minima non valida.
+              </div>
+          </div>
+        </div>
+    </div>
+   </div>
+   <div class="col-md-5">
+    <div class="form-group row">
+      <label for="residuo" class="col-sm-3 col-form-label">Residuo</label>
+      <div class="col-sm-2">
+        <input disabled #residuo="ngModel"  [(ngModel)]="prodotto.residuo"  class="form-control col-md-2" name="residuo" id="residuo" >
+      </div>
+  </div>
+
+  </div>
+
+  </div>
+
+
+
+<!--
+
+        <div class="form-row">
+        <div class="mb-3 row margini">
+          <label for="buonoPastoCommanda" class="col-sm-2 col-form-label">Buono Pasto:</label>  <--    pattern numerico  \d+(\.\d*)?|\.\d+*    /^[0-9]+(\.[0-9]*){0,1}$/g      ^[0-9]d{0,9}(.d{1,2})?%?$
+          <div class="col-sm-2">
+          <input NumbersOnly type="text" #buonoPastoCommanda="ngModel"  [(ngModel)]="prodotto.buonoPastoCommanda" class="form-control" name="buonoPastoCommanda" id="buonoPastoCommanda" pattern="^-?[0-9][0-9,\.]+$" placeholder="Inserire Buono Pasto">
+          <div *ngIf="buonoPastoCommanda.invalid && (buonoPastoCommanda.dirty || buonoPastoCommanda.touched)" class="alert-danger">
+
+              <div *ngIf="buonoPastoCommanda.errors.required">
+                  <span>Inserire l'importo del buono pasto</span>
+              </div>
+              <div *ngIf="buonoPastoCommanda.errors?.pattern">
+                  <span>il buono pasto non può essere negativo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+      <div class="mb-3 row margini">
+        <label for="impCoperto" class="col-sm-2 col-form-label">Coperto:</label>
+        <div class="col-sm-2">
+        <input #impCoperto="ngModel"  [(ngModel)]="prodotto.impCoperto" class="form-control" name="impCoperto" id="impCoperto" pattern="^-?[0-9][0-9,\.]+$" placeholder="Inserire Coperto">
+            <div *ngIf="impCoperto.invalid && (impCoperto.dirty || impCoperto.touched)" class="alert-danger">
+              <div *ngIf="impCoperto.errors.required">
+                  <span>Inserire il coperto</span>
+              </div>
+              <div *ngIf="impCoperto.errors?.pattern">
+                  solo valori posotivi
+                </div>
+             </div>
+        </div>
+      </div>
+        </div>
+
+
+      -->
+
+
+       <br>
+       <div class="footer" >
+            <div class="row col-sm-10 offset-2">
+              <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-success btn-md " (click)="conferma()">Conferma
+                  <fa-icon [icon]="faSave"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3" *ngIf="functionNew || functionEdit || functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-primary btn-md " (click)="reset()">Reset
+                  <fa-icon [icon]="faTimes"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3"  *ngIf="functionEdits ">
+                <button [disabled]="fm.invalid " class="btn btn-danger btn-md "  (click)="open(content)"> Cancella
+                  <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+                </button>
+              </div>
+              <div class="col-sm-3" >
+                <button  class="btn btn-info btn-md "  (click)="goback()"> Ritorna
+                  <fa-icon [icon]="faReply"  fixed="true"></fa-icon>
+                </button>
+              </div>
+            </div>
+       </div>
+       <br>
+  <!--   messaggio con esito operazione -->
+
+       <div *ngIf="isVisible  && !alertSuccess" class="alert alert-danger" role="alert">
+    <!--     <h4 class="alert-heading">Errore in Registrazione User</h4>   -->
+         <p>{{Message}}</p>
+         <hr>
+         <p class="mb-0">{{Message1err}}</p>
+       </div>
+       <div *ngIf="isVisible  && alertSuccess" class="alert alert-success" role="alert">
+  <!--       <h4 class="alert-heading">Registrazione User</h4>   -->
+         <p>{{Message}}</p>
+         <hr>
+         <p class="mb-0"></p>
+       </div>
+
+
+
+
+
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header modal-header-color">
+    <h4 class="modal-title" id="modal-basic-title">Conferma Cancellazione</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <p>confermi la cancellazione del Prodotto &nbsp;&nbsp;</p>
+      <p></p>
+      <p><strong>{{prodotto.descrizione}}&nbsp;</strong>&nbsp;?</p>
+      <!--   esempio di calendario che funziona benissimo
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+      -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Cancel click')">Cancel</button>
+
+    <button type="button" class="btn btn-danger btn-md " (click)="modal.close('Delete click')"> Cancella
+      <fa-icon [icon]="faTrash"  fixed="true"></fa-icon>
+    </button>
+  </div>
+</ng-template>
+
+
+<!-- prodotto-anag-detail1 works! -->
